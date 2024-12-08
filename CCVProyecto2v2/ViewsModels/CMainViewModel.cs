@@ -37,7 +37,8 @@ namespace CCVProyecto2v2.ViewsModels
 
         public async Task ObtenerClases()
         {
-            var lista = await _dbContext.Clase.ToListAsync();
+            var lista = await _dbContext.Clase.Include(c=>c.Profesor).ToListAsync();
+            //ListaClases.Clear();
 
             if (lista.Any())
             {

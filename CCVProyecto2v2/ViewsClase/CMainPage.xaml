@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CCVProyecto2v2.ViewsClase.CMainPage"
              xmlns:model="clr-namespace:CCVProyecto2v2.Dto">
-    <ScrollView>
+    <ScrollView Background="#e6e2dc">
         <Grid RowDefinitions="Auto,Auto,*" RowSpacing="15" Margin="15">
 
             <Button
@@ -46,11 +46,7 @@
                                 HorizontalOptions="End" 
                                 Text="{Binding Profesor.Nombre}" />
 
-                                    <Label 
-                                Grid.Row="1" 
-                                Grid.Column="0" 
-                                Text="Estudiante:" 
-                                FontAttributes="Bold" />
+                                  
 
                                     <Label 
                                 Grid.Row="2" 
