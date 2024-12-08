@@ -25,10 +25,10 @@ namespace CCVProyecto2v2.ViewsModels
         [ObservableProperty]
         private string tituloPagina;
 
-        private int idClase;
+        private int IdClase;
 
         [ObservableProperty]
-        private bool loadingClase;
+        private bool loadingClase=false;
         public ClaseViewModel()
         {
 
@@ -36,49 +36,45 @@ namespace CCVProyecto2v2.ViewsModels
         public ClaseViewModel(DbbContext context)
         {
             _dbContext = context;
-            MainThread.BeginInvokeOnMainThread(async () => await CargarDatos());
+            //MainThread.BeginInvokeOnMainThread(async () => await CargarDatos());
         }
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query.ContainsKey("id") && int.TryParse(query["id"].ToString(), out var id))
+            var id= int.Parse(query["id"].ToString());
+            IdClase = id;
+            if (IdClase == 0)
             {
-                idClase = id;
 
-                if (idClase == 0)
-                {
-                    TituloPagina = "Nueva Clase";
-                }
-                else
-                {
-                    TituloPagina = "Editar Clase";
-                    LoadingClase = true;
-
-                    var encontrado = await _dbContext.Clase
-                        .Include(c => c.Profesor)
-                        .FirstOrDefaultAsync(c => c.Id == idClase);
-
-                    if (encontrado != null)
-                    {
-                        ClaseDto = new ClaseDto
-                        {
-                            Id = encontrado.Id,
-                            ProfesorId = encontrado.ProfesorId,
-                        };
-
-
-                        {
-                            ClaseDto.Profesor = new ProfesorDto
-                            {
-                                Id = encontrado.Profesor.Id,
-                                Nombre = encontrado.Profesor.Nombre,
-                                Materia = encontrado.Profesor.Materia
-                            };
-                        }
-                    }
-                }
-
+                TituloPagina = "Nueva Clase";
             }
+            else
+            {
+                TituloPagina = "Editar Clase";
+                LoadingClase = true;
+
+                var encontrado = await _dbContext.Clase
+                    .Include(c => c.Profesor)
+                    .FirstOrDefaultAsync(c => c.Id == id);
+
+                if (encontrado != null)
+                {
+                    ClaseDto = new ClaseDto
+                    {
+                        Id = encontrado.Id,
+                        ProfesorId = encontrado.ProfesorId,
+                    };
+                    
+                    ClaseDto.Profesor = new ProfesorDto
+                    {
+                        Id = encontrado.Profesor.Id,
+                        Nombre = encontrado.Profesor.Nombre,
+                        Materia = encontrado.Profesor.Materia
+                    };
+                    
+                }
+            }
+
             MainThread.BeginInvokeOnMainThread(() => { LoadingClase = false; });
         }
 
@@ -91,53 +87,56 @@ namespace CCVProyecto2v2.ViewsModels
 
             var mensaje = new CuerpoC();
 
-            if (idClase == 0)
-            {
-                var nuevaClase = new Clase
+            await Task.Run(async () => {
+                if (IdClase == 0)
                 {
-                    ProfesorId = ClaseDto.ProfesorId
-                };
+                    var nuevaClase = new Clase
+                    {
+                        Nombre=ClaseDto.Nombre,
+                        ProfesorId = ClaseDto.ProfesorId
+                    };
 
-                _dbContext.Clase.Add(nuevaClase);
-                await _dbContext.SaveChangesAsync();
-
-                ClaseDto.Id = nuevaClase.Id;
-
-                mensaje = new CuerpoC
-                {
-                    EsCrear = true,
-                    ClaseDto = ClaseDto
-                };
-            }
-            else
-            {
-                var encontrado = await _dbContext.Clase.FirstOrDefaultAsync(c => c.Id == idClase);
-
-                if (encontrado != null)
-                {
-                    encontrado.ProfesorId = ClaseDto.ProfesorId;
-
+                    _dbContext.Clase.Add(nuevaClase);
                     await _dbContext.SaveChangesAsync();
+
+                    ClaseDto.Id = nuevaClase.Id;
 
                     mensaje = new CuerpoC
                     {
-                        EsCrear = false,
+                        EsCrear = true,
                         ClaseDto = ClaseDto
                     };
                 }
-            }
+                else
+                {
+                    var encontrado = await _dbContext.Clase.FirstOrDefaultAsync(c => c.Id == IdClase);
 
-            LoadingClase = false;
+                    if (encontrado != null)
+                    {
+                        encontrado.Nombre = ClaseDto.Nombre;
+                        encontrado.ProfesorId = ClaseDto.ProfesorId;
 
-            WeakReferenceMessenger.Default.Send(new MensajeriaC(mensaje));
-            await Shell.Current.Navigation.PopAsync();
+                        await _dbContext.SaveChangesAsync();
+
+                        mensaje = new CuerpoC
+                        {
+                            EsCrear = false,
+                            ClaseDto = ClaseDto
+                        };
+                    }
+                }
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    LoadingClase = false;
+                    WeakReferenceMessenger.Default.Send(new MensajeriaC(mensaje));
+                    Shell.Current.Navigation.PopAsync();
+                });
+            });
+
         }
 
         [ObservableProperty]
         private ObservableCollection<ProfesorDto> profesoresDisponibles = new();
-
-        [ObservableProperty]
-        private ObservableCollection<EstudianteDto> estudiantesDisponibles = new();
 
         public async Task CargarDatos()
         {
