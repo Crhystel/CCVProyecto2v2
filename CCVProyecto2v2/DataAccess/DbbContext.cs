@@ -44,8 +44,7 @@ namespace CCVProyecto2v2.DataAccess
             {
                 entity.HasOne(c => c.Profesor)
                 .WithMany(c => c.Clases)
-                .HasForeignKey(c => c.ProfesorId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(c => c.ProfesorId);
 
                 entity.HasMany(c => c.Estudiantes)
                 .WithMany(c => c.Clases)

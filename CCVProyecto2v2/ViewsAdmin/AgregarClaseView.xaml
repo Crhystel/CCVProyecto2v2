@@ -11,30 +11,33 @@
         <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="#e6e2dc">
 
             <ActivityIndicator 
-        IsVisible="{Binding LoadingClase}"
-        IsRunning="{Binding LoadingClase}"
-        Color="LimeGreen"
-        HeightRequest="30" />
+                IsVisible="{Binding LoadingClase}"
+                IsRunning="{Binding LoadingClase}"
+                Color="LimeGreen"
+                HeightRequest="30" />
 
             <Label Text="Profesor"/>
             <Picker 
-        ItemsSource="{Binding ProfesoresDisponibles}" 
-        SelectedItem="{Binding ClaseDto.Profesor}" 
-        ItemDisplayBinding="{Binding Nombre}" 
-        Margin="0,0,0,10" 
-        BackgroundColor="Black" 
-        TextColor="White" 
-        FontFamily="TheStudentsTeacherFont" />
+                ItemsSource="{Binding ProfesoresDisponibles}" 
+                SelectedItem="{Binding ClaseDto.Profesor}" 
+                ItemDisplayBinding="{Binding Nombre}" 
+                SelectedIndexChanged="OnProfesorSelected"
+                Margin="0,0,0,10" 
+                BackgroundColor="Black" 
+                TextColor="White" 
+                FontFamily="TheStudentsTeacherFont" />      
 
-            <Label Text="Nombre de la Clase"/>
-            <Entry Text="{Binding ClaseDto.Nombre}" Margin="30,0,30,10"/>
+            <Label 
+                Text="Nombre de la Clase"/>
+            <Entry 
+                Text="{Binding ClaseDto.Nombre}" Margin="30,0,30,10"/>
            
             <Button 
-        Text="Guardar" 
-        Command="{Binding GuardarCommand}" 
-        BackgroundColor="Black" 
-        TextColor="White" 
-        Margin="10,0,10,0" />
+                Text="Guardar" 
+                Command="{Binding GuardarCommand}" 
+                BackgroundColor="Black" 
+                TextColor="White" 
+                Margin="10,0,10,0" />
 
         </VerticalStackLayout>
     </ScrollView>
