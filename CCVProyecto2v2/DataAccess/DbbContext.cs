@@ -22,37 +22,16 @@ namespace CCVProyecto2v2.DataAccess
             {
                 entity.HasKey(c => c.Id);
                 entity.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
-            });
-
-            modelBuilder.Entity<Estudiante>(entity =>
-            {
                 entity.Property(e => e.Grado).HasMaxLength(50);
             });
-            modelBuilder.Entity<Estudiante>(entity =>
-            {
-                entity.HasOne(e => e.Clase)
-                  .WithOne(c => c.Estudiante)
-                 .HasForeignKey<Estudiante>(e => e.ClaseId)
-                 .OnDelete(DeleteBehavior.SetNull);
-            });
+
+            
 
             modelBuilder.Entity<Profesor>(entity =>
             {
                 entity.HasKey(c => c.Id);
                 entity.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
-            });
-
-            modelBuilder.Entity<Profesor>(entity =>
-            {
-
                 entity.Property(p => p.Materia).HasMaxLength(100);
-            });
-            modelBuilder.Entity<Profesor>(entity =>
-            {
-                entity.HasOne(p => p.Clase)
-                .WithOne(c => c.Profesor)
-                .HasForeignKey<Profesor>(p => p.ClaseId)
-                .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Clase>(entity =>
@@ -60,7 +39,26 @@ namespace CCVProyecto2v2.DataAccess
                 entity.HasKey(c => c.Id);
                 entity.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
             });
+            modelBuilder.Entity<Clase>(entity =>
+            {
+                entity.HasOne(c => c.Profesor)
+                .WithMany(c => c.Clases)
+                .HasForeignKey(c => c.ProfesorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
+                entity.HasMany(c => c.Estudiantes)
+                .WithMany(c => c.Clases)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ClaseEstudiante",
+                    c => c.HasOne<Estudiante>()
+                    .WithMany()
+                    .HasForeignKey("EstudianteId")
+                    .OnDelete(DeleteBehavior.Cascade),
+                    c => c.HasOne<Clase>()
+                    .WithMany()
+                    .HasForeignKey("ClaseId")
+                    .OnDelete(DeleteBehavior.Cascade));
+            });
 
 
         }

@@ -40,8 +40,6 @@ namespace CCVProyecto2v2.ViewsModels
                     ListaEstudiante.Add(new EstudianteDto
                     {
                         Id = item.Id,
-                        NombreUsuario = item.NombreUsuario,
-                        Contrasenia = item.Contrasenia,
                         Nombre = item.Nombre,
                         Cedula = item.Cedula,
                         Edad = item.Edad,
@@ -62,8 +60,6 @@ namespace CCVProyecto2v2.ViewsModels
             {
                 var encontrado = ListaEstudiante.First(c => c.Id == estudianteDto.Id);
                 encontrado.Nombre = estudianteDto.Nombre;
-                encontrado.NombreUsuario = estudianteDto.Nombre;
-                encontrado.Contrasenia = estudianteDto.Contrasenia;
                 encontrado.Cedula = estudianteDto.Cedula;
                 encontrado.Edad = estudianteDto.Edad;
                 encontrado.Grado = estudianteDto.Grado;

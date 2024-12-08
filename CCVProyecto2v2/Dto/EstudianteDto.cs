@@ -17,10 +17,6 @@ namespace CCVProyecto2v2.Dto
         [ObservableProperty]
         public string nombre;
         [ObservableProperty]
-        public string nombreUsuario;
-        [ObservableProperty]
-        public string contrasenia;
-        [ObservableProperty]
         public int edad;
         [ObservableProperty]
         private GradoEnum grado;

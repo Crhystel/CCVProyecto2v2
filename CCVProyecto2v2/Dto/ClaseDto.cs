@@ -14,13 +14,10 @@ namespace CCVProyecto2v2.Dto
         [ObservableProperty]
         public int id;
         [ObservableProperty]
-        public GradoEnum grado;
-        [ObservableProperty]
-        public MateriaEnum materia;
-        [ObservableProperty]
-        public int profesorId;
-
+        public string nombre;
         [ObservableProperty]
         public ProfesorDto profesor;
+        [ObservableProperty]
+        public ObservableCollection<EstudianteDto> estudiantes;
     }
 }

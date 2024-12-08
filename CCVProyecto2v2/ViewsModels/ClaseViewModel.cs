@@ -55,7 +55,6 @@ namespace CCVProyecto2v2.ViewsModels
                     LoadingClase = true;
 
                     var encontrado = await _dbContext.Clase
-                        .Include(c => c.Estudiante)
                         .Include(c => c.Profesor)
                         .FirstOrDefaultAsync(c => c.Id == idClase);
 

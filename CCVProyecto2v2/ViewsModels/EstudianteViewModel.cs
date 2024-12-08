@@ -62,9 +62,7 @@ namespace CCVProyecto2v2.ViewsModels
                         Id = encontrado.Id,
                         Edad = encontrado.Edad,
                         Cedula = encontrado.Cedula,
-                        Contrasenia = encontrado.Contrasenia,
                         Nombre = encontrado.Nombre,
-                        NombreUsuario = encontrado.NombreUsuario,
                         Grado = encontrado.Grado,
                     };
                 }
@@ -87,8 +85,6 @@ namespace CCVProyecto2v2.ViewsModels
                     var tbEstudiante = new Estudiante
                     {
                         Nombre = EstudianteDto.Nombre,
-                        NombreUsuario = EstudianteDto.NombreUsuario,
-                        Contrasenia = EstudianteDto.Contrasenia,
                         Edad = EstudianteDto.Edad,
                         Cedula = EstudianteDto.Cedula,
                         Grado = EstudianteDto.Grado,
@@ -112,8 +108,6 @@ namespace CCVProyecto2v2.ViewsModels
                     if (encontrado != null)
                     {
                         encontrado.Nombre = EstudianteDto.Nombre;
-                        encontrado.NombreUsuario = EstudianteDto.NombreUsuario;
-                        encontrado.Contrasenia = EstudianteDto.Contrasenia;
                         encontrado.Edad = EstudianteDto.Edad;
                         encontrado.Cedula = EstudianteDto.Cedula;
                         encontrado.Grado = EstudianteDto.Grado;
