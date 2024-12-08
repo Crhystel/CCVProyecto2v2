@@ -7,23 +7,24 @@
         <Grid RowDefinitions="Auto,Auto,*" RowSpacing="15" Margin="15">
 
             <Button
-        BackgroundColor="Black"
-        Grid.Row="0" 
-        Text="Nueva Clase" 
-        TextColor="White"
-        Command="{Binding CrearCommand}" />
+                BackgroundColor="Black"
+                Grid.Row="0" 
+                Text="Nueva Clase" 
+                TextColor="White"
+                Command="{Binding CrearCommand}" /> 
 
             <Label 
-        Grid.Row="1" 
-        Text="Lista de Clases" 
-        FontSize="Subtitle" />
+                Grid.Row="1" 
+                TextColor="Black"
+                Text="Lista de Clases" 
+                FontSize="Subtitle" />
 
             <ScrollView Grid.Row="2">
                 <CollectionView ItemsSource="{Binding ListaClases}">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout 
-                    ItemSpacing="5" 
-                    Orientation="Vertical" />
+                            ItemSpacing="5" 
+                            Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
 
                     <CollectionView.ItemTemplate>
@@ -33,45 +34,66 @@
                                     <RoundRectangle CornerRadius="5" />
                                 </Border.StrokeShape>
 
-                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+                                <Grid 
+                                    RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.ColumnSpan="2"
+                                        Text="{Binding Nombre}"
+                                        TextColor="Black"
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"/>
+                                    <Label 
+                                        Grid.Row="1" 
+                                        Grid.Column="0" 
+                                        Text="Profesor:"
+                                        TextColor="Black"
+                                        FontAttributes="Bold" />
+                                    <Label 
+                                        Grid.Row="1" 
+                                        Grid.Column="1" 
+                                        HorizontalOptions="End" 
+                                        TextColor="Black"
+                                        Text="{Binding Profesor.Nombre}"/>
+                                    <Label 
+                                        Grid.Row="2"
+                                        Grid.Column="0"
+                                        TextColor="Black"
+                                        Text="Materia:"
+                                        FontAttributes="Bold"/>
+                                    <Label
+                                        Grid.Row="2"
+                                        Grid.Column="2"
+                                        TextColor="Black"
+                                        HorizontalOptions="End"
+                                        Text="{Binding Profesor.Materia}"/>
 
                                     <Label 
-                                Grid.Row="0" 
-                                Grid.Column="0" 
-                                Text="Profesor:" 
-                                FontAttributes="Bold" />
-                                    <Label 
-                                Grid.Row="0" 
-                                Grid.Column="1" 
-                                HorizontalOptions="End" 
-                                Text="{Binding Profesor.Nombre}" />
-
-                                  
-
-                                    <Label 
-                                Grid.Row="2" 
-                                Grid.Column="0" 
-                                Padding="0,15,10,5" 
-                                Text="Editar" 
-                                TextColor="Black">
+                                        Grid.Row="2" 
+                                        Grid.Column="0" 
+                                        Padding="0,15,10,5" 
+                                        Text="Editar" 
+                                        TextColor="Black">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer 
-                                        Command="{Binding BindingContext.EditarCommand, Source={x:RelativeSource AncestorType={x:Type ContentPage}}}" 
-                                        CommandParameter="{Binding}" />
+                                                Command="{Binding BindingContext.EditarCommand, Source={x:RelativeSource AncestorType={x:Type ContentPage}}}" 
+                                                CommandParameter="{Binding}" />
                                         </Label.GestureRecognizers>
                                     </Label>
 
                                     <Label 
-                                Grid.Row="2" 
-                                Grid.Column="1" 
-                                Padding="10,15,0,5" 
-                                Text="Eliminar" 
-                                TextColor="Black" 
-                                HorizontalOptions="End">
+                                        Grid.Row="2" 
+                                        Grid.Column="1" 
+                                        Padding="10,15,0,5" 
+                                        Text="Eliminar" 
+                                        TextColor="Black" 
+                                        HorizontalOptions="End">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer 
-                                        Command="{Binding BindingContext.EliminarCommand, Source={x:RelativeSource AncestorType={x:Type ContentPage}}}" 
-                                        CommandParameter="{Binding}" />
+                                                Command="{Binding BindingContext.EliminarCommand, Source={x:RelativeSource AncestorType={x:Type ContentPage}}}" 
+                                                CommandParameter="{Binding}" /> 
                                         </Label.GestureRecognizers>
                                     </Label>
 

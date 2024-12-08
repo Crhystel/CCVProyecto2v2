@@ -48,6 +48,7 @@ namespace CCVProyecto2v2.ViewsModels
                     {
                         Id = clase.Id,
                         ProfesorId = clase.ProfesorId,
+                        Nombre=clase.Nombre,
                         
                         Profesor = new ProfesorDto
                         {
