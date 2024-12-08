@@ -22,7 +22,7 @@ namespace CCVProyecto2v2.DataAccess
             {
                 entity.HasKey(c => c.Id);
                 entity.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
-                entity.Property(e => e.Grado).HasMaxLength(50);
+                entity.Property(c => c.Grado).HasMaxLength(50);
             });
 
             
@@ -31,13 +31,14 @@ namespace CCVProyecto2v2.DataAccess
             {
                 entity.HasKey(c => c.Id);
                 entity.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
-                entity.Property(p => p.Materia).HasMaxLength(100);
+                entity.Property(c => c.Materia).HasMaxLength(100);
             });
 
             modelBuilder.Entity<Clase>(entity =>
             {
                 entity.HasKey(c => c.Id);
                 entity.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+                entity.Property(c => c.Nombre).HasMaxLength(100);
             });
             modelBuilder.Entity<Clase>(entity =>
             {

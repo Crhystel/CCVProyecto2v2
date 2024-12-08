@@ -36,7 +36,7 @@ namespace CCVProyecto2v2.ViewsModels
         public ClaseViewModel(DbbContext context)
         {
             _dbContext = context;
-            //MainThread.BeginInvokeOnMainThread(async () => await CargarDatos());
+            MainThread.BeginInvokeOnMainThread(async () => await CargarDatos());
         }
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)

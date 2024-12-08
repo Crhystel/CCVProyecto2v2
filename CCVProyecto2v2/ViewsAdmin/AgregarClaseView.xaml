@@ -26,7 +26,8 @@
         TextColor="White" 
         FontFamily="TheStudentsTeacherFont" />
 
-            <Label Text="Estudiante"/>
+            <Label Text="Nombre de la Clase"/>
+            <Entry Text="{Binding ClaseDto.Nombre}" Margin="30,0,30,10"/>
            
             <Button 
         Text="Guardar" 
