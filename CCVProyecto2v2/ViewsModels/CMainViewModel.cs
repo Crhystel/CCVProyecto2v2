@@ -54,8 +54,6 @@ namespace CCVProyecto2v2.ViewsModels
                             Nombre = clase.Profesor.Nombre,
                             Cedula = clase.Profesor.Cedula,
                             Edad = clase.Profesor.Edad,
-                            NombreUsuario = clase.Profesor.NombreUsuario,
-                            Contrasenia = clase.Profesor.Contrasenia,
                             Materia = clase.Profesor.Materia
                         }
                     });

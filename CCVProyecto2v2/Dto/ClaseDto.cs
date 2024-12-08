@@ -16,7 +16,9 @@ namespace CCVProyecto2v2.Dto
         [ObservableProperty]
         public string nombre;
         [ObservableProperty]
-        public ProfesorDto profesor;
+        public int profesorId;
+        [ObservableProperty]
+        public Profesor profesor;
         [ObservableProperty]
         public ObservableCollection<EstudianteDto> estudiantes;
     }
