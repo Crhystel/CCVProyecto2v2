@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CCVProyecto2v2.ViewsAdmin.AgregarProfesorView"
+             xmlns:viewmodel="clr-namespace:CCVProyecto2v2.ViewsModels">
+    <ContentPage.BindingContext>
+        <viewmodel:ProfesorViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="#e6e2dc">
+            <Label Text="Ingresar datos:" FontSize="30" FontAttributes="Bold"></Label>
+            <ActivityIndicator IsVisible="{Binding LoadingProfesor}"
+                   IsRunning="{Binding LoadingProfesor}"
+                   Color="LimeGreen"
+                   HeightRequest="30"/>
+            <Label Text="Cédula"/>
+            <Entry Text="{Binding ProfesorDto.Cedula}" Margin="30,0,30,10"/>
+            <Label Text="Nombre Completo"/>
+            <Entry Text="{Binding ProfesorDto.Nombre}" Margin="30,0,30,10"/>
+            <Label Text="Nombre de usuario"/>
+            <Entry Text="{Binding ProfesorDto.NombreUsuario}" Margin="30,0,30,10"/>
+            <Label Text="Contraseña"/>
+            <Entry Text="{Binding ProfesorDto.Contrasenia}" Margin="30,0,30,10"/>
+            <Label Text="Edad"/>
+            <Entry Text="{Binding ProfesorDto.Edad}" Margin="30,0,30,10"/>
+            <Label Text="Materia"/>
+            <Picker ItemsSource="{Binding MateriasDisponibles}" 
+            SelectedItem="{Binding ProfesorDto.Materia}"
+            TextColor="White"
+            BackgroundColor="Black"
+            FontFamily="TheStudentsTeacherFont"
+            Margin="70,0,70,0"/>
+            <Button Text="Crear" Command="{Binding GuardarCommand}" BackgroundColor="Black" FontFamily="TheStudentsTeacherFont" TextColor="White"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

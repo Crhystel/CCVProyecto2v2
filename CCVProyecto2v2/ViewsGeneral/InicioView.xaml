@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CCVProyecto2v2.ViewsGeneral.InicioView"
+             BackgroundColor="#e6e2dc">
+    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <VerticalStackLayout Spacing="20" HorizontalOptions="Center" VerticalOptions="Center">
+            <Label Text="Gotitas del Saber"
+               FontSize="28"
+               FontAttributes="Bold"
+               HorizontalTextAlignment="Center"
+               TextColor="#333333" FontFamily="TheStudentsTeacherFont"/>
+            <Image Source="books.png" 
+               HeightRequest="150"
+               WidthRequest="300"
+               Aspect="AspectFit" 
+               HorizontalOptions="Center" />
+            <Label Text="Formando el futuro con amor y conocimiento."
+               FontSize="16"
+               TextColor="#333333"
+               HorizontalTextAlignment="Center" FontFamily="TheStudentsTeacherFont"/>
+            <Button Text="Ingresar"
+                BackgroundColor="#333333"
+                TextColor="#FFFFFF"
+                FontSize="18"
+                HeightRequest="50"
+                WidthRequest="200"
+                CornerRadius="25"
+                HorizontalOptions="Center" FontFamily="TheStudentsTeacherFont"
+                Clicked="Ingresar_Clicked"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

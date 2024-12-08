@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CCVProyecto2v2.ViewsAdmin.AgregarClaseView"
+             xmlns:viewmodel="clr-namespace:CCVProyecto2v2.ViewsModels">
+    <ContentPage.BindingContext>
+        <viewmodel:ClaseViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="#e6e2dc">
+
+            <ActivityIndicator 
+        IsVisible="{Binding LoadingClase}"
+        IsRunning="{Binding LoadingClase}"
+        Color="LimeGreen"
+        HeightRequest="30" />
+
+            <Label Text="Profesor"/>
+            <Picker 
+        ItemsSource="{Binding ProfesoresDisponibles}" 
+        SelectedItem="{Binding ClaseDto.Profesor}" 
+        ItemDisplayBinding="{Binding Nombre}" 
+        Margin="0,0,0,10" 
+        BackgroundColor="Black" 
+        TextColor="White" 
+        FontFamily="TheStudentsTeacherFont" />
+
+            <Label Text="Estudiante"/>
+           
+            <Button 
+        Text="Guardar" 
+        Command="{Binding GuardarCommand}" 
+        BackgroundColor="Black" 
+        TextColor="White" 
+        Margin="10,0,10,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
