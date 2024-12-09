@@ -20,6 +20,6 @@ namespace CCVProyecto2v2.Dto
         [ObservableProperty]
         public ProfesorDto profesor;
         [ObservableProperty]
-        public ObservableCollection<EstudianteDto> estudiantes;
+        public ObservableCollection<ClaseEstudianteDto> clasesEstudiantes;
     }
 }
