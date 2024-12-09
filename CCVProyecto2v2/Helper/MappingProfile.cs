@@ -13,6 +13,7 @@ namespace CCVProyecto2v2.Helper
             CreateMap<Profesor, ProfesorDto>();
             CreateMap<ProfesorDto, Profesor>();
             CreateMap<Clase, ClaseDto>();
+            CreateMap<ClaseEstudiante, ClaseEstudianteDto>();
         }
     }
 }
