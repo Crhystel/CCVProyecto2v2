@@ -10,6 +10,8 @@ namespace CCVProyecto2v2.Dto
     public partial class ClaseEstudianteDto:ObservableObject
     {
         [ObservableProperty]
+        public int id;
+        [ObservableProperty]
         public int claseId;
 
         [ObservableProperty]

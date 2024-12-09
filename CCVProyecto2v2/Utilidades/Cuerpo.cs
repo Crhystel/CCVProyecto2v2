@@ -13,5 +13,6 @@ namespace CCVProyecto2v2.Utilidades
         public EstudianteDto EstudianteDto { get; set; }
         public ClaseDto ClaseDto { get; set; }
         public ProfesorDto ProfesorDto { get; set; }
+        public ClaseEstudianteDto ClaseEstudianteDto { get;set; }
     }
 }

@@ -11,6 +11,7 @@ namespace CCVProyecto2v2.Dto
 {
     public partial class ClaseDto:ObservableObject
     {
+
         [ObservableProperty]
         public int id;
         [ObservableProperty]
