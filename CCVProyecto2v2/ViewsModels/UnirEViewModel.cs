@@ -46,7 +46,7 @@ namespace CCVProyecto2v2.ViewsModels
             else
             {
                 TituloPagina = "Editar";
-                LoadingClase = false;
+                LoadingClaseEstudiante = false;
                 var encontrado = await _dbContext.ClaseEstudiantes.Include(c=> c.Clase).Include(c=>c.Estudiante).FirstOrDefaultAsync(c=>c.Id==id);
                 if (encontrado != null)
                 {

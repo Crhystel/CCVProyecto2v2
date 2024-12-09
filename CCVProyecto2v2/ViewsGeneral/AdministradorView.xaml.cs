@@ -1,5 +1,7 @@
+using CCVProyecto2v2.ViewsAdmin;
 using CCVProyecto2v2.ViewsClase;
 using CCVProyecto2v2.ViewsEstudiante;
+using CCVProyecto2v2.ViewsModels;
 using CCVProyecto2v2.ViewsProfesor;
 
 namespace CCVProyecto2v2.ViewsGeneral;
@@ -22,9 +24,10 @@ public partial class AdministradorView : ContentPage
         {
             Navigation.PushAsync(new CMainPage());
         }
-        public void UnirEstudiante_Clicked(object sender, EventArgs e)
-        {
-           Navigation.PushAsync(new CMainPage());
-        }
+    public void UnirEstudiante_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new UnirEstudianteView());
+    }
+      
     
 }

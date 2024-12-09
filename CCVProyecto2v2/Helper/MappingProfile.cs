@@ -14,6 +14,7 @@ namespace CCVProyecto2v2.Helper
             CreateMap<ProfesorDto, Profesor>();
             CreateMap<Clase, ClaseDto>();
             CreateMap<ClaseEstudiante, ClaseEstudianteDto>();
+            CreateMap<ClaseEstudiante, ClaseEstudianteDto>().ReverseMap();
         }
     }
 }

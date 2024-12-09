@@ -27,7 +27,7 @@ namespace CCVProyecto2v2.DataAccess
             });
             modelBuilder.Entity<ClaseEstudiante>(entity =>
             {
-                entity.HasKey(c => new { c.ClaseId, c.EstudianteId });
+                entity.HasKey(c =>c.Id);
             });
             modelBuilder.Entity<Profesor>(entity =>
             {
