@@ -41,18 +41,24 @@ namespace CCVProyecto2v2
             builder.Services.AddTransient<AgregarClaseView>();
             builder.Services.AddTransient<CMainPage>();
 
+            builder.Services.AddTransient<UEMainViewModel>();
+            builder.Services.AddTransient<UnirEViewModel>();
+            builder.Services.AddTransient<UnirEstudianteView>();
+
             dbContext.Database.EnsureCreated();
             dbContext.Dispose();
 
             Routing.RegisterRoute(nameof(AgregarEstudianteView), typeof(AgregarEstudianteView));
             Routing.RegisterRoute(nameof(AgregarProfesorView), typeof(AgregarProfesorView));
             Routing.RegisterRoute(nameof(AgregarClaseView), typeof(AgregarClaseView));
+            Routing.RegisterRoute(nameof(UnirEstudianteView), typeof(UnirEstudianteView));
 
 #if DEBUG
             builder.Logging.AddDebug();
             builder.Services.AddSingleton<EstudianteViewModel>();
             builder.Services.AddSingleton<ProfesorViewModel>();
             builder.Services.AddSingleton<ClaseViewModel>();
+            builder.Services.AddSingleton<UnirEstudianteView>();
 #endif
 
             return builder.Build();

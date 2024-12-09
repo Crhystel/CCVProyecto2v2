@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CCVProyecto2v2.ViewsAdmin.UEMainPage"
+             xmlns:model="clr-namespace:CCVProyecto2v2.Dto"
+             Title="Lista de Clases y Estudiantes">
+    <ScrollView>
+        <Grid RowDefinitions="Auto,Auto,*" RowSpacing="15" Margin="15">
+            <Button 
+                Grid.Row="0" 
+                Text="Nuevo Estudiante" 
+                BackgroundColor="Black"
+                TextColor="White"
+
+                Command="{Binding CrearCommand}" />
+
+            <Label 
+                Grid.Row="0" 
+                Text="Clases y Estudiantes" 
+                FontSize="Title" 
+                HorizontalOptions="Center" />
+            <ScrollView Grid.Row="2">
+                <CollectionView ItemsSource="{Binding ListaClaseEstudiantes}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout 
+                            ItemSpacing="5" 
+                            Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:ClaseEstudianteDto">
+                            <Border Stroke="Gray" StrokeThickness="1" Padding="10">
+                                <VerticalStackLayout>
+                                    <Label Text="Clase" FontAttributes="Bold" />
+                                    <Label Text="{Binding Clase.Nombre}" />
+
+                                    <Label Text="Profesor" FontAttributes="Bold" />
+                                    <Label Text="{Binding Clase.Profesor.Nombre}" />
+
+                                    <Label Text="Estudiante" FontAttributes="Bold" />
+                                    <Label Text="{Binding Estudiante.Nombre}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

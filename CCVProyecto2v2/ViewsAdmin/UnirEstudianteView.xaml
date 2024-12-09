@@ -15,21 +15,21 @@
             Color="LimeGreen"
             HeightRequest="30" />
 
-            <Label Text="Profesor"/>
+            <Label Text="Clase"/>
             <Picker 
-            ItemsSource="{Binding EstudiantesDisponibles}" 
-            SelectedItem="{Binding ClaseEstudianteDto.Estudiante}" 
-            ItemDisplayBinding="{Binding Nombre}" 
-            SelectedIndexChanged="OnEstudianteSelected"
-            Margin="0,0,0,10" 
-            BackgroundColor="Black" 
-            TextColor="White" 
-            FontFamily="TheStudentsTeacherFont" />
+                ItemsSource="{Binding ListaClaseEstudiantes}" 
+                SelectedItem="{Binding ClaseEstudianteDto.Clase}" 
+                ItemDisplayBinding="{Binding Clase.Nombre}" 
+                BackgroundColor="Black" TextColor="White" 
+                Margin="0,0,0,10" />
 
-            <Label 
-            Text="Nombre de la Clase"/>
-            <Entry 
-            Text="{Binding ClaseEstudianteDto.Estudiante}" Margin="30,0,30,10"/>
+            <Label Text="Estudiante" />
+            <Picker 
+                ItemsSource="{Binding ListaClaseEstudiantes}" 
+                SelectedItem="{Binding ClaseEstudianteDto.Estudiante}" 
+                ItemDisplayBinding="{Binding Estudiante.Nombre}" 
+                BackgroundColor="Black" TextColor="White" 
+                Margin="0,0,0,10" />
 
             <Button 
             Text="Guardar" 

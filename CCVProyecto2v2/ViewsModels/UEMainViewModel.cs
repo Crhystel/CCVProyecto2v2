@@ -12,12 +12,12 @@ using System.Collections.ObjectModel;
 
 namespace CCVProyecto2v2.ViewsModels
 {
-    public partial class UEMainViewPage: ObservableObject
+    public partial class UEMainViewModel: ObservableObject
     {
         private readonly DbbContext _dbContext;
         [ObservableProperty]
         private ObservableCollection<ClaseEstudianteDto> listaClaseEstudiantes = new ObservableCollection<ClaseEstudianteDto>();
-        public UEMainViewPage(DbbContext context)
+        public UEMainViewModel(DbbContext context)
         {
             _dbContext = context;
             MainThread.BeginInvokeOnMainThread(new Action(async () => await ObtenerClases()));
@@ -30,18 +30,17 @@ namespace CCVProyecto2v2.ViewsModels
         }
         public async Task ObtenerClases()
         {
-            var lista = await _dbContext.ClaseEstudiantes.Include(c => c.Estudiante).Include(c=>c.Clase).ToListAsync();
+            var lista = await _dbContext.ClaseEstudiantes.Include(c => c.Estudiante).Include(c=>c.Clase).ThenInclude(c=>c.Profesor).ToListAsync();
             //ListaClases.Clear();
-
-            if (lista.Any())
-            {
+            ListaClaseEstudiantes.Clear();
+            
                 foreach (var clase in lista)
                 {
                     ListaClaseEstudiantes.Add(new ClaseEstudianteDto
                     {
                         Id = clase.Id,
                         EstudianteId = clase.Id,
-
+                        ClaseId = clase.ClaseId,
                         Estudiante = new EstudianteDto
                         {
                             Id = clase.Estudiante.Id,
@@ -49,10 +48,20 @@ namespace CCVProyecto2v2.ViewsModels
                             Cedula = clase.Estudiante.Cedula,
                             Edad = clase.Estudiante.Edad,
                             Grado = clase.Estudiante.Grado
+                        },
+                        Clase = new ClaseDto
+                        {
+                            Id = clase.Clase.Id,
+                            Nombre = clase.Clase.Nombre,
+                            Profesor = new ProfesorDto
+                            {
+                                Id = clase.Clase.Profesor.Id,
+                                Nombre = clase.Clase.Profesor.Nombre
+                            }
                         }
                     });
                 }
-            }
+            
         }
         private void ClaseMensajeRecibido(Cuerpo claseCuerpo)
         {

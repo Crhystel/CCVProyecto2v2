@@ -10,10 +10,13 @@ namespace CCVProyecto2v2.DataAccess
         public DbSet<Estudiante> Estudiante { get; set; }
         public DbSet<Clase> Clase { get; set; }
         public DbSet<ClaseEstudiante> ClaseEstudiantes { get; set; }
+        public DbbContext()
+        {
+            
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string conexionDB = $"Filename ={ConexionDB.DevolverRuta("CrhysteProyecto.db")}";
-            Console.WriteLine($"Ruta de la base de datos: {ConexionDB.DevolverRuta("CrhysteProyecto.db")}");
+            string conexionDB = $"Filename ={ConexionDB.DevolverRuta("CCVProyecto2.db")}";
 
             optionsBuilder.UseSqlite(conexionDB);
         }
@@ -28,6 +31,7 @@ namespace CCVProyecto2v2.DataAccess
             modelBuilder.Entity<ClaseEstudiante>(entity =>
             {
                 entity.HasKey(c =>c.Id);
+                entity.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
             });
             modelBuilder.Entity<Profesor>(entity =>
             {

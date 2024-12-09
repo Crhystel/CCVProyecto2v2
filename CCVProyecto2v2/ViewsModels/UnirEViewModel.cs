@@ -32,12 +32,13 @@ namespace CCVProyecto2v2.ViewsModels
         public UnirEViewModel(DbbContext context)
         {
             _dbContext = context;
-            MainThread.BeginInvokeOnMainThread(async () => await CargarDatos());
+            //MainThread.BeginInvokeOnMainThread(async () => await CargarDatos());
         }
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             var id= int.Parse(query["id"].ToString());
+            LoadingClaseEstudiante = true;
             IdClaseEstudiante = id;
             if(IdClaseEstudiante==0)
             {
@@ -53,15 +54,22 @@ namespace CCVProyecto2v2.ViewsModels
                     ClaseEstudianteDto = new ClaseEstudianteDto
                     {
                         Id = encontrado.Id,
-                        EstudianteId = encontrado.Id,
-                    };
-                    ClaseEstudianteDto.Estudiante = new EstudianteDto
-                    {
-                        Id = encontrado.Estudiante.Id,
-                        Nombre = encontrado.Estudiante.Nombre,
-                        Grado = encontrado.Estudiante.Grado,
+                        ClaseId = encontrado.ClaseId,
+                        EstudianteId = encontrado.EstudianteId,
+                        Estudiante = new EstudianteDto
+                        {
+                            Id = encontrado.Estudiante.Id,
+                            Nombre = encontrado.Estudiante.Nombre,
+                            Grado = encontrado.Estudiante.Grado
+                        },
+                        Clase = new ClaseDto
+                        {
+                            Id = encontrado.Clase.Id,
+                            Nombre = encontrado.Clase.Nombre
+                        }
                     };
                 }
+                LoadingClaseEstudiante = false;
             }
             MainThread.BeginInvokeOnMainThread(() => { LoadingClaseEstudiante = false; });
         }
@@ -71,20 +79,20 @@ namespace CCVProyecto2v2.ViewsModels
             LoadingClaseEstudiante = true;
             var mensaje = new Cuerpo();
 
-            await Task.Run(async () =>
+            try
             {
                 if (IdClaseEstudiante == 0)
                 {
-                    var nuevaClase = new ClaseEstudiante
+                    var nuevaClaseEstudiante = new ClaseEstudiante
                     {
                         EstudianteId = ClaseEstudianteDto.EstudianteId,
-                        ClaseId = ClaseEstudianteDto.Id,
+                        ClaseId = ClaseEstudianteDto.ClaseId
                     };
 
-                    _dbContext.ClaseEstudiantes.Add(nuevaClase);
+                    _dbContext.ClaseEstudiantes.Add(nuevaClaseEstudiante);
                     await _dbContext.SaveChangesAsync();
 
-                    ClaseEstudianteDto.Id = nuevaClase.Id;
+                    ClaseEstudianteDto.Id = nuevaClaseEstudiante.Id;
 
                     mensaje = new Cuerpo
                     {
@@ -94,12 +102,13 @@ namespace CCVProyecto2v2.ViewsModels
                 }
                 else
                 {
-                    var encontrado = await _dbContext.ClaseEstudiantes.FirstOrDefaultAsync(c => c.Id == IdClaseEstudiante);
+                    var existente = await _dbContext.ClaseEstudiantes
+                        .FirstOrDefaultAsync(c => c.Id == IdClaseEstudiante);
 
-                    if (encontrado != null)
+                    if (existente != null)
                     {
-                        encontrado.EstudianteId = ClaseEstudianteDto.Id;
-                        encontrado.ClaseId = ClaseEstudianteDto.Id;
+                        existente.EstudianteId = ClaseEstudianteDto.EstudianteId;
+                        existente.ClaseId = ClaseEstudianteDto.ClaseId;
 
                         await _dbContext.SaveChangesAsync();
 
@@ -110,31 +119,32 @@ namespace CCVProyecto2v2.ViewsModels
                         };
                     }
                 }
-                MainThread.BeginInvokeOnMainThread(() =>
-                {
-                    LoadingClaseEstudiante = false;
-                    WeakReferenceMessenger.Default.Send(new Mensajeria(mensaje));
-                    Shell.Current.Navigation.PopAsync();
-                });
-            });
+
+                WeakReferenceMessenger.Default.Send(new Mensajeria(mensaje));
+                await Shell.Current.Navigation.PopAsync();
+            }
+            finally
+            {
+                LoadingClaseEstudiante = false;
+            }
         }
-        [ObservableProperty]
-        private ObservableCollection<EstudianteDto> estudiantesDisponibles = new();
+        //[ObservableProperty]
+        //private ObservableCollection<EstudianteDto> estudiantesDisponibles = new();
 
-        public async Task CargarDatos()
-        {
-            var estudiantes = await _dbContext.Estudiante.ToListAsync();
-            EstudiantesDisponibles = new ObservableCollection<EstudianteDto>(
-                estudiantes.Select(p => new EstudianteDto
-                {
-                    Id = p.Id,
-                    Nombre = p.Nombre,
-                    Cedula = p.Cedula,
-                    Grado = p.Grado
-                }));
+        //public async Task CargarDatos()
+        //{
+        //    var estudiantes = await _dbContext.Estudiante.ToListAsync();
+        //    EstudiantesDisponibles = new ObservableCollection<EstudianteDto>(
+        //        estudiantes.Select(p => new EstudianteDto
+        //        {
+        //            Id = p.Id,
+        //            Nombre = p.Nombre,
+        //            Cedula = p.Cedula,
+        //            Grado = p.Grado
+        //        }));
 
 
-        }
+        //}
 
     }
 }
