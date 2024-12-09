@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CCVProyecto2v2.ViewsAdmin.UEMainPage"
-             xmlns:model="clr-namespace:CCVProyecto2v2.Dto"
-             Title="Lista de Clases y Estudiantes">
+             xmlns:model="clr-namespace:CCVProyecto2v2.Dto">
     <ScrollView>
         <Grid RowDefinitions="Auto,Auto,*" RowSpacing="15" Margin="15">
             <Button 
@@ -14,11 +13,6 @@
 
                 Command="{Binding CrearCommand}" />
 
-            <Label 
-                Grid.Row="0" 
-                Text="Clases y Estudiantes" 
-                FontSize="Title" 
-                HorizontalOptions="Center" />
             <ScrollView Grid.Row="2">
                 <CollectionView ItemsSource="{Binding ListaClaseEstudiantes}">
                     <CollectionView.ItemsLayout>

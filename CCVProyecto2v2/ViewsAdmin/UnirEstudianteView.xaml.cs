@@ -10,6 +10,7 @@ public partial class UnirEstudianteView : ContentPage
 	{
 		InitializeComponent();
         BindingContext = new UnirEViewModel(new DbbContext());
+
     }
     private void OnEstudianteSelected(object sender, EventArgs e)
     {
@@ -23,4 +24,5 @@ public partial class UnirEstudianteView : ContentPage
             }
         }
     }
+
 }
