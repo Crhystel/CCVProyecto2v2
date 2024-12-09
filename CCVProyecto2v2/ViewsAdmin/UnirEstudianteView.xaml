@@ -6,44 +6,42 @@
     <ContentPage.BindingContext>
         <viewmodel:UnirEViewModel />
     </ContentPage.BindingContext>
-    <ScrollView>
+    <ScrollView Background="#e6e2dc">
         <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="#e6e2dc">
 
             <ActivityIndicator 
-            IsVisible="{Binding LoadingClaseEstudiante}"
-            IsRunning="{Binding LoadingClaseEstudiante}"
-            Color="LimeGreen"
-            HeightRequest="30" />
+                IsVisible="{Binding LoadingClaseEstudiante}"
+                IsRunning="{Binding LoadingClaseEstudiante}"
+                Color="LimeGreen"
+                HeightRequest="30" />
 
-            <Label Text="Clase"/>
+            <Label Text="Clase" FontAttributes="Bold" />
             <Picker 
                 ItemsSource="{Binding ClasesDisponibles}" 
                 SelectedItem="{Binding ClaseEstudianteDto.Clase}" 
                 ItemDisplayBinding="{Binding Nombre}" 
-                BackgroundColor="Black" TextColor="White" 
+                BackgroundColor="Black" 
                 Margin="0,0,0,10" />
 
-            <Label Text="Selecciona estudiantes" />
+            <Label Text="Selecciona estudiantes" FontAttributes="Bold" />
             <CollectionView 
-                ItemsSource="{Binding EstudiantesDisponibles}" 
-                SelectionMode="Multiple" 
-                SelectedItems="{Binding EstudiantesSeleccionados}">
+                ItemsSource="{Binding EstudiantesDisponibles}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid Padding="10">
-                            <Label Text="{Binding Nombre}" VerticalOptions="Center" />
+                            <CheckBox IsChecked="{Binding IsSelected}" />
+                            <Label Text="{Binding Nombre}" VerticalOptions="Center" Margin="10,10,0,0" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
             <Button 
                 Text="Guardar" 
-                Command="{Binding GuardarMultipleCommand}" 
+                Command="{Binding GuardarCommand}" 
                 BackgroundColor="Black" 
                 TextColor="White" 
                 Margin="10,0,10,0" />
-
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

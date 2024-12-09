@@ -21,6 +21,8 @@ namespace CCVProyecto2v2.ViewsModels
         [ObservableProperty]
         private ClaseEstudianteDto claseEstudianteDto = new();
         [ObservableProperty]
+        private ObservableCollection<ClaseEstudianteDto> listaClaseEstudiantes = new();
+        [ObservableProperty]
         private ObservableCollection<ClaseDto> clasesDisponibles = new();
         [ObservableProperty]
         private ObservableCollection<EstudianteDto> estudiantesSeleccionados = new();
@@ -40,6 +42,7 @@ namespace CCVProyecto2v2.ViewsModels
             {
                 await CargarDatos();
                 await CargarClases();
+                await CargarEstudiantesPorClase();
             });
         }
 
@@ -81,61 +84,61 @@ namespace CCVProyecto2v2.ViewsModels
             }
             MainThread.BeginInvokeOnMainThread(() => { LoadingClaseEstudiante = false; });
         }
-        //[RelayCommand]
-        //public async Task Guardar()
-        //{
-        //    LoadingClaseEstudiante = true;
-        //    var mensaje = new Cuerpo();
+        [RelayCommand]
+        public async Task Guardar()
+        {
+            LoadingClaseEstudiante = true;
+            var mensaje = new Cuerpo();
 
-        //    try
-        //    {
-        //        if (IdClaseEstudiante == 0)
-        //        {
-        //            var nuevaClaseEstudiante = new ClaseEstudiante
-        //            {
-        //                EstudianteId = ClaseEstudianteDto.EstudianteId,
-        //                ClaseId = ClaseEstudianteDto.ClaseId
-        //            };
+            try
+            {
+                if (IdClaseEstudiante == 0)
+                {
+                    var nuevaClaseEstudiante = new ClaseEstudiante
+                    {
+                        EstudianteId = ClaseEstudianteDto.EstudianteId,
+                        ClaseId = ClaseEstudianteDto.ClaseId
+                    };
 
-        //            _dbContext.ClaseEstudiantes.Add(nuevaClaseEstudiante);
-        //            await _dbContext.SaveChangesAsync();
+                    _dbContext.ClaseEstudiantes.Add(nuevaClaseEstudiante);
+                    await _dbContext.SaveChangesAsync();
 
-        //            ClaseEstudianteDto.Id = nuevaClaseEstudiante.Id;
+                    ClaseEstudianteDto.Id = nuevaClaseEstudiante.Id;
 
-        //            mensaje = new Cuerpo
-        //            {
-        //                EsCrear = true,
-        //                ClaseEstudianteDto = ClaseEstudianteDto
-        //            };
-        //        }
-        //        else
-        //        {
-        //            var existente = await _dbContext.ClaseEstudiantes
-        //                .FirstOrDefaultAsync(c => c.Id == IdClaseEstudiante);
+                    mensaje = new Cuerpo
+                    {
+                        EsCrear = true,
+                        ClaseEstudianteDto = ClaseEstudianteDto
+                    };
+                }
+                else
+                {
+                    var existente = await _dbContext.ClaseEstudiantes
+                        .FirstOrDefaultAsync(c => c.Id == IdClaseEstudiante);
 
-        //            if (existente != null)
-        //            {
-        //                existente.EstudianteId = ClaseEstudianteDto.EstudianteId;
-        //                existente.ClaseId = ClaseEstudianteDto.ClaseId;
+                    if (existente != null)
+                    {
+                        existente.EstudianteId = ClaseEstudianteDto.EstudianteId;
+                        existente.ClaseId = ClaseEstudianteDto.ClaseId;
 
-        //                await _dbContext.SaveChangesAsync();
+                        await _dbContext.SaveChangesAsync();
 
-        //                mensaje = new Cuerpo
-        //                {
-        //                    EsCrear = false,
-        //                    ClaseEstudianteDto = ClaseEstudianteDto
-        //                };
-        //            }
-        //        }
+                        mensaje = new Cuerpo
+                        {
+                            EsCrear = false,
+                            ClaseEstudianteDto = ClaseEstudianteDto
+                        };
+                    }
+                }
 
-        //        WeakReferenceMessenger.Default.Send(new Mensajeria(mensaje));
-        //        await Shell.Current.Navigation.PopAsync();
-        //    }
-        //    finally
-        //    {
-        //        LoadingClaseEstudiante = false;
-        //    }
-        //}
+                WeakReferenceMessenger.Default.Send(new Mensajeria(mensaje));
+                await Shell.Current.Navigation.PopAsync();
+            }
+            finally
+            {
+                LoadingClaseEstudiante = false;
+            }
+        }
         [ObservableProperty]
         private ObservableCollection<EstudianteDto> estudiantesDisponibles = new();
 
@@ -178,6 +181,34 @@ namespace CCVProyecto2v2.ViewsModels
                     {
                         Id = c.Profesor.Id,
                         Nombre = c.Profesor.Nombre
+                    }
+                }));
+        }
+        public async Task CargarEstudiantesPorClase()
+        {
+            var claseEstudiantes = await _dbContext.ClaseEstudiantes
+                .Include(ce => ce.Clase)
+                .Include(ce => ce.Estudiante)
+                .ToListAsync();
+
+            ListaClaseEstudiantes = new ObservableCollection<ClaseEstudianteDto>(
+                claseEstudiantes.Select(ce => new ClaseEstudianteDto
+                {
+                    Id = ce.Id,
+                    Clase = new ClaseDto
+                    {
+                        Id = ce.Clase.Id,
+                        Nombre = ce.Clase.Nombre,
+                        Profesor = new ProfesorDto
+                        {
+                            Id = ce.Clase.Profesor.Id,
+                            Nombre = ce.Clase.Profesor.Nombre
+                        }
+                    },
+                    Estudiante = new EstudianteDto
+                    {
+                        Id = ce.Estudiante.Id,
+                        Nombre = ce.Estudiante.Nombre
                     }
                 }));
         }
