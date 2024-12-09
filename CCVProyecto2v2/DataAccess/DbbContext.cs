@@ -9,6 +9,7 @@ namespace CCVProyecto2v2.DataAccess
         public DbSet<Profesor> Profesor { get; set; }
         public DbSet<Estudiante> Estudiante { get; set; }
         public DbSet<Clase> Clase { get; set; }
+        public DbSet<ClaseEstudiante> ClaseEstudiantes { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string conexionDB = $"Filename ={ConexionDB.DevolverRuta("CrhysteProyecto.db")}";
@@ -24,9 +25,10 @@ namespace CCVProyecto2v2.DataAccess
                 entity.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
                 entity.Property(c => c.Grado).HasMaxLength(50);
             });
-
-            
-
+            modelBuilder.Entity<ClaseEstudiante>(entity =>
+            {
+                entity.HasKey(c => new { c.ClaseId, c.EstudianteId });
+            });
             modelBuilder.Entity<Profesor>(entity =>
             {
                 entity.HasKey(c => c.Id);
@@ -46,22 +48,15 @@ namespace CCVProyecto2v2.DataAccess
                 .WithMany(c => c.Clases)
                 .HasForeignKey(c => c.ProfesorId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasMany(c => c.Estudiantes)
-                .WithMany(c => c.Clases)
-                .UsingEntity<Dictionary<string, object>>(
-                    "ClaseEstudiante",
-                    c => c.HasOne<Estudiante>()
-                    .WithMany()
-                    .HasForeignKey("EstudianteId")
-                    .OnDelete(DeleteBehavior.Cascade),
-                    c => c.HasOne<Clase>()
-                    .WithMany()
-                    .HasForeignKey("ClaseId")
-                    .OnDelete(DeleteBehavior.Cascade));
             });
-
-
+            modelBuilder.Entity<ClaseEstudiante>()
+                .HasOne(c => c.Clase)
+                .WithMany(c => c.ClasesEstudiantes)
+                .HasForeignKey(c => c.ClaseId);
+            modelBuilder.Entity<ClaseEstudiante>()
+                .HasOne(c=>c.Estudiante)
+                .WithMany(c=>c.ClasesEstudiantes)
+                .HasForeignKey(c=>c.EstudianteId);
         }
     }
 }

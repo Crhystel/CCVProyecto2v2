@@ -13,7 +13,7 @@ namespace CCVProyecto2v2.Models
         [Required(ErrorMessage = "Este campo es obligatorio.")]
 
         public GradoEnum Grado { get; set; }
-        public ICollection<Clase> Clases { get; set; }
+        public ICollection<ClaseEstudiante> ClasesEstudiantes { get; set; } = new List<ClaseEstudiante>();
 
     }
 }
