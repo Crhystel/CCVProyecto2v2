@@ -24,7 +24,7 @@ namespace CCVProyecto2v2.ViewsModels
         {
             _dbContext = context;
             MainThread.BeginInvokeOnMainThread(new Action(async () => await Obtener()));
-            WeakReferenceMessenger.Default.Register<MensajeriaP>(this, (r, y) =>
+            WeakReferenceMessenger.Default.Register<Mensajeria>(this, (r, y) =>
             {
                 ProfesorMensajeRecibido(y.Value);
 
@@ -50,7 +50,7 @@ namespace CCVProyecto2v2.ViewsModels
                 }
             }
         }
-        private void ProfesorMensajeRecibido(CuerpoP profesorCuerpo)
+        private void ProfesorMensajeRecibido(Cuerpo profesorCuerpo)
         {
             var profesorDto = profesorCuerpo.ProfesorDto;
             if (profesorCuerpo.EsCrear)

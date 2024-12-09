@@ -17,6 +17,10 @@
             <Entry Text="{Binding EstudianteDto.Cedula}" Margin="30,0,30,10"/>
             <Label Text="Nombre Completo"/>
             <Entry Text="{Binding EstudianteDto.Nombre}" Margin="30,0,30,10"/>
+            <Label Text="Nombre de usuario"/>
+            <Entry Text="{Binding EstudianteDto.NombreUsuario}" Margin="30,0,30,10"/>
+            <Label Text="Contraseña"/>
+            <Entry Text="{Binding EstudianteDto.Contrasenia}" Margin="30,0,30,10"/>
             <Label Text="Edad"/>
             <Entry Text="{Binding EstudianteDto.Edad}" Margin="30,0,30,10"/>
             <Label Text="Grado"/>

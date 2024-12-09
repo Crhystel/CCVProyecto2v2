@@ -85,7 +85,7 @@ namespace CCVProyecto2v2.ViewsModels
         {
             LoadingClase = true;
 
-            var mensaje = new CuerpoC();
+            var mensaje = new Cuerpo();
 
             await Task.Run(async () => {
                 if (IdClase == 0)
@@ -101,7 +101,7 @@ namespace CCVProyecto2v2.ViewsModels
 
                     ClaseDto.Id = nuevaClase.Id;
 
-                    mensaje = new CuerpoC
+                    mensaje = new Cuerpo
                     {
                         EsCrear = true,
                         ClaseDto = ClaseDto
@@ -118,7 +118,7 @@ namespace CCVProyecto2v2.ViewsModels
 
                         await _dbContext.SaveChangesAsync();
 
-                        mensaje = new CuerpoC
+                        mensaje = new Cuerpo
                         {
                             EsCrear = false,
                             ClaseDto = ClaseDto
@@ -128,7 +128,7 @@ namespace CCVProyecto2v2.ViewsModels
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     LoadingClase = false;
-                    WeakReferenceMessenger.Default.Send(new MensajeriaC(mensaje));
+                    WeakReferenceMessenger.Default.Send(new Mensajeria(mensaje));
                     Shell.Current.Navigation.PopAsync();
                 });
             });

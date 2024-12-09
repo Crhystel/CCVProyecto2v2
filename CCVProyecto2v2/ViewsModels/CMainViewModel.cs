@@ -24,7 +24,7 @@ namespace CCVProyecto2v2.ViewsModels
 
             MainThread.BeginInvokeOnMainThread(new Action(async () => await ObtenerClases()));
 
-            WeakReferenceMessenger.Default.Register<MensajeriaC>(this, (r, m) =>
+            WeakReferenceMessenger.Default.Register<Mensajeria>(this, (r, m) =>
             {
                 ClaseMensajeRecibido(m.Value);
             });
@@ -57,7 +57,7 @@ namespace CCVProyecto2v2.ViewsModels
                 }
             }
         }
-        private void ClaseMensajeRecibido(CuerpoC claseCuerpo)
+        private void ClaseMensajeRecibido(Cuerpo claseCuerpo)
         {
             var claseDto = claseCuerpo.ClaseDto;
 

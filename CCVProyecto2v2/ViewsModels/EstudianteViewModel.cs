@@ -64,6 +64,8 @@ namespace CCVProyecto2v2.ViewsModels
                         Cedula = encontrado.Cedula,
                         Nombre = encontrado.Nombre,
                         Grado = encontrado.Grado,
+                        NombreUsuario = encontrado.NombreUsuario,
+                        Contrasenia = encontrado.Contrasenia,
                     };
                 }
 
@@ -88,6 +90,8 @@ namespace CCVProyecto2v2.ViewsModels
                         Edad = EstudianteDto.Edad,
                         Cedula = EstudianteDto.Cedula,
                         Grado = EstudianteDto.Grado,
+                        Contrasenia=EstudianteDto.Contrasenia,
+                        NombreUsuario=EstudianteDto.NombreUsuario,
                     };
 
                     _dbContext.Estudiante.Add(tbEstudiante);
@@ -111,6 +115,8 @@ namespace CCVProyecto2v2.ViewsModels
                         encontrado.Edad = EstudianteDto.Edad;
                         encontrado.Cedula = EstudianteDto.Cedula;
                         encontrado.Grado = EstudianteDto.Grado;
+                        encontrado.Contrasenia=EstudianteDto.Contrasenia;
+                        encontrado.NombreUsuario = EstudianteDto.NombreUsuario;
 
                         await _dbContext.SaveChangesAsync();
 

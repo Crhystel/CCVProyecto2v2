@@ -11,5 +11,7 @@ namespace CCVProyecto2v2.Utilidades
     {
         public bool EsCrear { get; set; }
         public EstudianteDto EstudianteDto { get; set; }
+        public ClaseDto ClaseDto { get; set; }
+        public ProfesorDto ProfesorDto { get; set; }
     }
 }
