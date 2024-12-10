@@ -33,6 +33,7 @@ namespace CCVProyecto2v2.DataAccess
                 entity.HasKey(u => u.Id);
                 entity.Property(u => u.NombreUsuario).IsRequired();
                 entity.Property(u => u.Contrasenia).IsRequired();
+                entity.Property(u => u.Rol).IsRequired();
             });
 
             modelBuilder.Entity<Estudiante>(entity =>
