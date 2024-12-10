@@ -26,6 +26,8 @@ namespace CCVProyecto2v2.Dto
         public int edad;
         [ObservableProperty]
         private GradoEnum grado;
+        [ObservableProperty]
+        public RolEnum rol;
 
         public bool IsSelected { get; set; }
         [ObservableProperty]

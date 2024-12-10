@@ -44,6 +44,7 @@ namespace CCVProyecto2v2.ViewsModels
                         Cedula = item.Cedula,
                         Edad = item.Edad,
                         Grado = item.Grado,
+                        Rol = item.Rol,
                     });
                 }
             }
@@ -63,6 +64,7 @@ namespace CCVProyecto2v2.ViewsModels
                 encontrado.Cedula = estudianteDto.Cedula;
                 encontrado.Edad = estudianteDto.Edad;
                 encontrado.Grado = estudianteDto.Grado;
+                encontrado.Rol = estudianteDto.rol;
             }
         }
         [RelayCommand]

@@ -25,8 +25,12 @@
             <Entry Text="{Binding EstudianteDto.Edad}" Margin="30,0,30,10"/>
             <Label Text="Grado"/>
             <Picker ItemsSource="{Binding GradosDisponibles}" 
-        SelectedItem="{Binding EstudianteDto.Grado}"
-        Margin="70,0,70,0" BackgroundColor="Black" TextColor="White" FontFamily="TheStudentsTeacherFont"/>
+                SelectedItem="{Binding EstudianteDto.Grado}"
+                Margin="70,0,70,0" BackgroundColor="Black" TextColor="White" FontFamily="TheStudentsTeacherFont"/>
+            <Label Text="Rol"/>
+            <Picker ItemsSource="{Binding RolesDisponibles}"
+                SelectedItem="{Binding EstudianteDto.Rol}"
+                Margin="70,0,70,0" BackgroundColor="Black" TextColor="White" FontFamily="TheStudentsTeacherFont"/>  
             <Button Text="Crear" Command="{Binding GuardarCommand}" BackgroundColor="Black" TextColor="White" Margin="10,0,10,0"/>
         </VerticalStackLayout>
     </ScrollView>
