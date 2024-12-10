@@ -64,5 +64,5 @@ namespace CCVProyecto2v2.DataAccess
                 .HasForeignKey(c=>c.EstudianteId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
-    }
+    }//coso para restablecer
 }
