@@ -40,9 +40,7 @@ public partial class LoginView : ContentPage
                     case RolEnum.Estudiante:
                         await Navigation.PushAsync(new EstudianteView());
                         break;
-                    default:
-                        await DisplayAlert("Error", "Rol desconocido", "OK");
-                        break;
+                    
                 }
             }
             else
