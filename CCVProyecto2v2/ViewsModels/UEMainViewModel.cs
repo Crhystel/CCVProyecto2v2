@@ -38,37 +38,38 @@ namespace CCVProyecto2v2.ViewsModels
                 .ThenInclude(c => c.Profesor)
                 .ToListAsync();
 
-            Debug.WriteLine($"Clases obtenidas: {lista.Count}");
-
             ListaClaseEstudiantes.Clear();
 
-            foreach (var clase in lista)
-            {
-                ListaClaseEstudiantes.Add(new ClaseEstudianteDto
+            var clasesAgrupadas = lista.GroupBy(c => c.Clase.Id) .Select(grupo => new ClaseEstudianteDto
+           {
+               ClaseId = grupo.Key,
+               Clase = new ClaseDto
+               {
+                   Id = grupo.First().Clase.Id,
+                   Nombre = grupo.First().Clase.Nombre,
+                   Profesor = new ProfesorDto
+                   {
+                       Id = grupo.First().Clase.Profesor.Id,
+                       Nombre = grupo.First().Clase.Profesor.Nombre
+                   }
+               },
+               Estudiantes = grupo.Select(g => new EstudianteDto
+               {
+                   Id = g.Estudiante.Id,
+                   Nombre = g.Estudiante.Nombre,
+                   Cedula = g.Estudiante.Cedula,
+                   Edad = g.Estudiante.Edad,
+                   Grado = g.Estudiante.Grado
+               }).ToList()
+           })
+           .ToList();
+
+                ListaClaseEstudiantes.Clear();
+
+                foreach (var clase in clasesAgrupadas)
                 {
-                    Id = clase.Id,
-                    EstudianteId = clase.EstudianteId,
-                    ClaseId = clase.ClaseId,
-                    Estudiante = new EstudianteDto
-                    {
-                        Id = clase.Estudiante.Id,
-                        Nombre = clase.Estudiante.Nombre,
-                        Cedula = clase.Estudiante.Cedula,
-                        Edad = clase.Estudiante.Edad,
-                        Grado = clase.Estudiante.Grado
-                    },
-                    Clase = new ClaseDto
-                    {
-                        Id = clase.Clase.Id,
-                        Nombre = clase.Clase.Nombre,
-                        Profesor = new ProfesorDto
-                        {
-                            Id = clase.Clase.Profesor.Id,
-                            Nombre = clase.Clase.Profesor.Nombre
-                        }
-                    }
-                });
-            }
+                    ListaClaseEstudiantes.Add(clase);
+                }
         }
         private void ClaseMensajeRecibido(Cuerpo claseCuerpo)
         {

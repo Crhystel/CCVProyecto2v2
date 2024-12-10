@@ -166,29 +166,29 @@ namespace CCVProyecto2v2.ViewsModels
                 }));
         }
         [RelayCommand]
-        public async Task GuardarMultiple()
+public async Task GuardarMultiple()
+{
+    if (ClaseEstudianteDto.ClaseId == null || ClaseEstudianteDto.ClaseId == 0)
+    {
+        await Shell.Current.DisplayAlert("Error", "Selecciona una clase válida.", "OK");
+        return;
+    }
+
+    foreach (var estudiante in EstudiantesDisponibles.Where(c => c.IsSelected))
+    {
+        var nuevaClaseEstudiante = new ClaseEstudiante
         {
-            if (ClaseEstudianteDto.ClaseId == null || ClaseEstudianteDto.ClaseId == 0)
-            {
-                await Shell.Current.DisplayAlert("Error", "Selecciona una clase válida.", "OK");
-                return;
-            }
+            EstudianteId = estudiante.Id,
+            ClaseId = ClaseEstudianteDto.ClaseId
+        };
 
-            foreach (var estudiante in EstudiantesDisponibles.Where(c => c.IsSelected))
-            {
-                var nuevaClaseEstudiante = new ClaseEstudiante
-                {
-                    EstudianteId = estudiante.Id,
-                    ClaseId = ClaseEstudianteDto.ClaseId
-                };
+        _dbContext.ClaseEstudiantes.Add(nuevaClaseEstudiante);
+    }
 
-                _dbContext.ClaseEstudiantes.Add(nuevaClaseEstudiante);
-            }
-
-            await _dbContext.SaveChangesAsync();
-            await CargarEstudiantesPorClase();
-            await Shell.Current.DisplayAlert("Éxito", "Los estudiantes se han vinculado correctamente con la clase.", "OK");
-        }
+    await _dbContext.SaveChangesAsync();
+    await CargarEstudiantesPorClase();
+    await Shell.Current.DisplayAlert("Éxito", "Los estudiantes se han vinculado correctamente con la clase.", "OK");
+}
 
         public async Task CargarClases()
         {

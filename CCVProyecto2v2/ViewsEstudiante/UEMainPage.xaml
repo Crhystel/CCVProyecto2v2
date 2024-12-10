@@ -4,7 +4,7 @@
              x:Class="CCVProyecto2v2.ViewsAdmin.UEMainPage"
              xmlns:model="clr-namespace:CCVProyecto2v2.Dto"
              xmlns:viewmodel="clr-namespace:CCVProyecto2v2.ViewsModels">
-    <ScrollView>
+    <ScrollView BackgroundColor="#e6e2dc">
         <VerticalStackLayout Padding="15" Spacing="20">
             <Button 
                 Text="Nuevo Estudiante" 
@@ -29,29 +29,40 @@
                                 <Label Text="Profesor" FontAttributes="Bold" />
                                 <Label Text="{Binding Clase.Profesor.Nombre}" />
 
-                                <Label Text="Estudiante" FontAttributes="Bold" />
-                                <Label Text="{Binding Estudiante.Nombre}" />
+                                <Label Text="Estudiantes" FontAttributes="Bold" />
+                                <CollectionView ItemsSource="{Binding Estudiantes}">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                                    </CollectionView.ItemsLayout>
+
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:EstudianteDto">
+                                            <Label Text="{Binding Nombre}" />
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
 
                                 <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
                                     <Button 
-                                        Text="Editar" 
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UEMainViewModel}}, Path=EditarCommand}" 
-                                        CommandParameter="{Binding .}" 
-                                        BackgroundColor="Gray" 
-                                        TextColor="White" />
+                            Text="Editar" 
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UEMainViewModel}}, Path=EditarCommand}" 
+                            CommandParameter="{Binding .}" 
+                            BackgroundColor="Gray" 
+                            TextColor="White" />
 
                                     <Button 
-                                        Text="Eliminar" 
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UEMainViewModel}}, Path=EliminarCommand}" 
-                                        CommandParameter="{Binding .}" 
-                                        BackgroundColor="Red" 
-                                        TextColor="White" />
+                            Text="Eliminar" 
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UEMainViewModel}}, Path=EliminarCommand}" 
+                            CommandParameter="{Binding .}" 
+                            BackgroundColor="Red" 
+                            TextColor="White" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

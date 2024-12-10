@@ -22,5 +22,6 @@ namespace CCVProyecto2v2.Dto
 
         [ObservableProperty]
         public EstudianteDto estudiante;
+        public List<EstudianteDto> Estudiantes { get; set; } = new();
     }
 }
