@@ -4,148 +4,161 @@
              x:Class="CCVProyecto2v2.ViewsProfesor.PMainPage"
              xmlns:model="clr-namespace:CCVProyecto2v2.Dto">
     <ScrollView>
-        <Grid RowDefinitions="Auto,Auto,*" RowSpacing="15" Margin="15">
+        <Grid 
+            RowDefinitions="Auto,Auto,*" 
+            RowSpacing="15" 
+            Margin="15">
 
             <Button 
-            Grid.Row="0" 
-            Text="Nuevo Profesor" 
-            Command="{Binding CrearCommand}"
-            Margin="20"
-            FontFamily="TheStudentsTeacherFont"
-            BackgroundColor="Black"
-            TextColor="White"/>
+                Grid.Row="0" 
+                Text="Nuevo Profesor" 
+                BackgroundColor="Black"
+                TextColor="White"
+                Command="{Binding CrearCommand}" />
 
             <Label 
-         Grid.Row="1" 
-         Text="Lista de profesores" 
-         FontSize="Subtitle" 
-         Margin="10"/>
+                Grid.Row="1" 
+                Text="Lista de profesores" 
+                FontSize="Subtitle" />
 
-            <ScrollView Grid.Row="2">
-                <CollectionView ItemsSource="{Binding ListaProfesor}">
+            <ScrollView 
+                Grid.Row="2">
+                <CollectionView 
+                    ItemsSource="{Binding ListaProfesor}">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout 
-                     ItemSpacing="5" 
-                     Orientation="Vertical" />
+                            ItemSpacing="5" 
+                            Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
 
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:ProfesorDto">
-                            <Border Padding="10,5" HorizontalOptions="FillAndExpand">
+                        <DataTemplate 
+                            x:DataType="model:ProfesorDto">
+                            <Border 
+                                Padding="10,5" 
+                                HorizontalOptions="FillAndExpand">
                                 <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="5" />
+                                    <RoundRectangle 
+                                        CornerRadius="5" />
                                 </Border.StrokeShape>
 
-                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+                                <Grid 
+                                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+                                    ColumnDefinitions="Auto,*">
 
                                     <Label 
-                                 Grid.Row="0" 
-                                 Grid.Column="0" 
-                                 Text="Nombre Completo:" 
-                                 FontAttributes="Bold" />
+                                        Grid.Row="0"
+                                        Grid.Column="0" 
+                                        Text="Nombre Completo:" 
+                                        FontAttributes="Bold" />
                                     <Label 
-                                 Grid.Row="0" 
-                                 Grid.Column="1" 
-                                 HorizontalOptions="End" 
-                                 Text="{Binding Nombre}" />
+                                        Grid.Row="0" 
+                                        Grid.Column="1" 
+                                        HorizontalOptions="End" 
+                                        Text="{Binding Nombre}" />
 
                                     <Label 
-                                 Grid.Row="1" 
-                                 Grid.Column="0" 
-                                 Text="Edad:" 
-                                 FontAttributes="Bold" />
+                                        Grid.Row="1" 
+                                        Grid.Column="0" 
+                                        Text="Edad:" 
+                                        FontAttributes="Bold" />
                                     <Label 
-                                 Grid.Row="1" 
-                                 Grid.Column="1" 
-                                 HorizontalOptions="End" 
-                                 Text="{Binding Edad}" />
+                                        Grid.Row="1" 
+                                        Grid.Column="1" 
+                                        HorizontalOptions="End" 
+                                        Text="{Binding Edad}" />
 
                                     <Label 
-                                 Grid.Row="2" 
-                                 Grid.Column="0" 
-                                 Text="Nombre de usuario:" 
-                                 FontAttributes="Bold" />
+                                        Grid.Row="2" 
+                                        Grid.Column="0" 
+                                        Text="Nombre de usuario:" 
+                                        FontAttributes="Bold" />
                                     <Label 
-                                 Grid.Row="2" 
-                                 Grid.Column="1" 
-                                 HorizontalOptions="End" 
-                                 Text="{Binding NombreUsuario}" />
+                                        Grid.Row="2" 
+                                        Grid.Column="1" 
+                                        HorizontalOptions="End" 
+                                        Text="{Binding NombreUsuario}" />
 
                                     <Label 
-                                 Grid.Row="3" 
-                                 Grid.Column="0" 
-                                 Text="Contraseña:" 
-                                 FontAttributes="Bold" />
+                                        Grid.Row="3" 
+                                        Grid.Column="0" 
+                                        Text="Contraseña:" 
+                                        FontAttributes="Bold" />
                                     <Label 
-                                 Grid.Row="3" 
-                                 Grid.Column="1" 
-                                 HorizontalOptions="End" 
-                                 Text="{Binding Contrasenia}" />
+                                        Grid.Row="3" 
+                                        Grid.Column="1" 
+                                        HorizontalOptions="End" 
+                                        Text="{Binding Contrasenia}" />
 
                                     <Label 
-                                 Grid.Row="4" 
-                                 Grid.Column="0" 
-                                 Text="Cedula:" 
-                                 FontAttributes="Bold" />
+                                        Grid.Row="4" 
+                                        Grid.Column="0" 
+                                        Text="Cédula:" 
+                                        FontAttributes="Bold" />
                                     <Label 
-                                 Grid.Row="4" 
-                                 Grid.Column="1" 
-                                 HorizontalOptions="End" 
-                                 Text="{Binding Cedula}" />
+                                        Grid.Row="4" 
+                                        Grid.Column="1" 
+                                        HorizontalOptions="End" 
+                                        Text="{Binding Cedula}" />
 
                                     <Label 
-                                 Grid.Row="5" 
-                                 Grid.Column="0" 
-                                 Text="Grado:" 
-                                 FontAttributes="Bold" />
+                                        Grid.Row="5" 
+                                        Grid.Column="0" 
+                                        Text="Grado:" 
+                                        FontAttributes="Bold" />
                                     <Label 
-                                 Grid.Row="5" 
-                                 Grid.Column="1" 
-                                 HorizontalOptions="End" 
-                                 Text="{Binding Materia}" />
-                                    <Label
-                                        Grid.Row="7"
-                                        Grid.Column="0"
-                                        Text="Rol"
-                                        FontAttributes="Bold"/>
-                                    <Label
-                                        Grid.Row="7"
-                                        Grid.Column="1"
-                                        HorizontalOptions="End"
-                                        Text="{Binding Rol}"/>
+                                        Grid.Row="5" 
+                                        Grid.Column="1" 
+                                        HorizontalOptions="End" 
+                                        Text="{Binding Materia}" />
 
                                     <Label 
-                                 Grid.Row="6" 
-                                 Grid.Column="0" 
-                                 Padding="0,15,10,5" 
-                                 Text="Editar" 
-                                 TextColor="Black">
+                                        Grid.Row="6" 
+                                        Grid.Column="0" 
+                                        Text="Rol:" 
+                                        FontAttributes="Bold" />
+                                    <Label 
+                                        Grid.Row="6" 
+                                        Grid.Column="1" 
+                                        HorizontalOptions="End" 
+                                        Text="{Binding Rol}" />
+
+                                    <Label 
+                                        Grid.Row="7" 
+                                        Grid.Column="0" 
+                                        Padding="0,15,10,5" 
+                                        Text="Editar" 
+                                        TextColor="Black">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer 
-                                         Command="{Binding BindingContext.EditarCommand, Source={x:RelativeSource AncestorType={x:Type ContentPage}}}" 
-                                         CommandParameter="{Binding}" />
+                                                Command="{Binding BindingContext.EditarCommand, Source={x:RelativeSource AncestorType={x:Type ContentPage}}}" 
+                                                CommandParameter="{Binding}" />
                                         </Label.GestureRecognizers>
                                     </Label>
 
                                     <Label 
-                                 Grid.Row="6" 
-                                 Grid.Column="1" 
-                                 Padding="10,15,0,5" 
-                                 Text="Eliminar" 
-                                 TextColor="Black" 
-                                 HorizontalOptions="End">
+                                        Grid.Row="7" 
+                                        Grid.Column="1" 
+                                        Padding="10,15,0,5" 
+                                        Text="Eliminar" 
+                                        TextColor="Black" 
+                                        HorizontalOptions="End">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer 
-                                         Command="{Binding BindingContext.EliminarCommand, Source={x:RelativeSource AncestorType={x:Type ContentPage}}}" 
-                                         CommandParameter="{Binding}" />
+                                                Command="{Binding BindingContext.EliminarCommand, Source={x:RelativeSource AncestorType={x:Type ContentPage}}}" 
+                                                CommandParameter="{Binding}" />
                                         </Label.GestureRecognizers>
                                     </Label>
+
                                 </Grid>
+
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
+
                 </CollectionView>
             </ScrollView>
+
         </Grid>
     </ScrollView>
 </ContentPage>
