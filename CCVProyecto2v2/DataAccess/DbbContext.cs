@@ -10,11 +10,9 @@ namespace CCVProyecto2v2.DataAccess
         public DbSet<Estudiante> Estudiante { get; set; }
         public DbSet<Clase> Clase { get; set; }
         public DbSet<ClaseEstudiante> ClaseEstudiantes { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
-
         public DbbContext()
         {
-            
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -24,24 +22,48 @@ namespace CCVProyecto2v2.DataAccess
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Estudiante>().ToTable("Estudiantes");
-            modelBuilder.Entity<Profesor>().ToTable("Profesores");
-
-            // Configuración de clave primaria en la clase base Usuario
-            modelBuilder.Entity<Usuario>(entity =>
-            {
-                entity.HasKey(u => u.Id);
-                entity.Property(u => u.NombreUsuario).IsRequired();
-                entity.Property(u => u.Contrasenia).IsRequired();
-                entity.Property(u => u.Rol).IsRequired();
-            });
-
             modelBuilder.Entity<Estudiante>(entity =>
             {
-                entity.Property(e => e.Grado).HasMaxLength(50);
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+                entity.Property(c => c.Grado).HasMaxLength(50);
             });
+            modelBuilder.Entity<ClaseEstudiante>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+            });
+            modelBuilder.Entity<Profesor>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+                entity.Property(c => c.Materia).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Clase>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+                entity.Property(c => c.Nombre).HasMaxLength(100);
+            });
+            modelBuilder.Entity<Clase>(entity =>
+            {
+                entity.HasOne(c => c.Profesor)
+                .WithMany(c => c.Clases)
+                .HasForeignKey(c => c.ProfesorId)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
+            modelBuilder.Entity<ClaseEstudiante>()
+                .HasOne(c => c.Clase)
+                .WithMany(c => c.ClasesEstudiantes)
+                .HasForeignKey(c => c.ClaseId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ClaseEstudiante>()
+                .HasOne(c => c.Estudiante)
+                .WithMany(c => c.ClasesEstudiantes)
+                .HasForeignKey(c => c.EstudianteId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
+    }//coso para restablecer
+}
 
-
-    }
-}//restablecido
