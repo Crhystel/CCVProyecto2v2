@@ -31,6 +31,18 @@ namespace CCVProyecto2v2.ViewsModels
         private int IdClaseEstudiante;
         [ObservableProperty]
         private bool loadingClaseEstudiante = false;
+
+        [ObservableProperty]
+        private ClaseDto clase;
+
+        partial void OnClaseChanged(ClaseDto value)
+        {
+            if (ClaseEstudianteDto != null && value != null)
+            {
+                ClaseEstudianteDto.ClaseId = value.Id;
+            }
+        }
+
         public UnirEViewModel()
         {
             
@@ -156,18 +168,28 @@ namespace CCVProyecto2v2.ViewsModels
         [RelayCommand]
         public async Task GuardarMultiple()
         {
-            foreach (var estudiante in EstudiantesSeleccionados)
+            if (ClaseEstudianteDto.ClaseId == null || ClaseEstudianteDto.ClaseId == 0)
+            {
+                await Shell.Current.DisplayAlert("Error", "Selecciona una clase válida.", "OK");
+                return;
+            }
+
+            foreach (var estudiante in EstudiantesDisponibles.Where(c => c.IsSelected))
             {
                 var nuevaClaseEstudiante = new ClaseEstudiante
                 {
                     EstudianteId = estudiante.Id,
                     ClaseId = ClaseEstudianteDto.ClaseId
                 };
+
                 _dbContext.ClaseEstudiantes.Add(nuevaClaseEstudiante);
             }
+
             await _dbContext.SaveChangesAsync();
-            await CargarDatos();
+            await CargarEstudiantesPorClase();
+            await Shell.Current.DisplayAlert("Éxito", "Los estudiantes se han vinculado correctamente con la clase.", "OK");
         }
+
         public async Task CargarClases()
         {
             var clases = await _dbContext.Clase.Include(c => c.Profesor).ToListAsync();

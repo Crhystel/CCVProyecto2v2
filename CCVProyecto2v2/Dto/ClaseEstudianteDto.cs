@@ -12,7 +12,7 @@ namespace CCVProyecto2v2.Dto
         [ObservableProperty]
         public int id;
         [ObservableProperty]
-        public int claseId;
+        public int? claseId;
 
         [ObservableProperty]
         public ClaseDto clase;

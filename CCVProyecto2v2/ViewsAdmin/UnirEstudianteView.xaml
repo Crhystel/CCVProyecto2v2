@@ -18,7 +18,7 @@
             <Label Text="Clase" FontAttributes="Bold" />
             <Picker 
                 ItemsSource="{Binding ClasesDisponibles}" 
-                SelectedItem="{Binding ClaseEstudianteDto.Clase}" 
+                SelectedItem="{Binding Clase}" 
                 ItemDisplayBinding="{Binding Nombre}" 
                 BackgroundColor="Black" 
                 Margin="0,0,0,10" />
@@ -38,7 +38,7 @@
 
             <Button 
                 Text="Guardar" 
-                Command="{Binding GuardarCommand}" 
+                Command="{Binding GuardarMultipleCommand}" 
                 BackgroundColor="Black" 
                 TextColor="White" 
                 Margin="10,0,10,0" />

@@ -56,11 +56,13 @@ namespace CCVProyecto2v2.DataAccess
             modelBuilder.Entity<ClaseEstudiante>()
                 .HasOne(c => c.Clase)
                 .WithMany(c => c.ClasesEstudiantes)
-                .HasForeignKey(c => c.ClaseId);
+                .HasForeignKey(c => c.ClaseId)
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<ClaseEstudiante>()
                 .HasOne(c=>c.Estudiante)
                 .WithMany(c=>c.ClasesEstudiantes)
-                .HasForeignKey(c=>c.EstudianteId);
+                .HasForeignKey(c=>c.EstudianteId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
