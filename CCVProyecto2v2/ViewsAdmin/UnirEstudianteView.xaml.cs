@@ -12,6 +12,19 @@ public partial class UnirEstudianteView : ContentPage
         BindingContext = new UnirEViewModel(new DbbContext());
 
     }
+    private void OnClaseSelected(object sender, EventArgs e)
+    {
+        var picker = sender as Picker;
+        if (picker?.SelectedItem is ClaseDto claseSeleccionada)
+        {
+            var viewModel = BindingContext as UnirEViewModel;
+            if (viewModel != null)
+            {
+                viewModel.ClaseEstudianteDto.ClaseId = claseSeleccionada.Id;
+            }
+        }
+    }
+
     private void OnEstudianteSelected(object sender, EventArgs e)
     {
         var picker = sender as Picker;

@@ -6,11 +6,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CCVProyecto2v2.ViewsModels
@@ -18,35 +15,27 @@ namespace CCVProyecto2v2.ViewsModels
     public partial class UnirEViewModel : ObservableObject, IQueryAttributable
     {
         private readonly DbbContext _dbContext;
+
         [ObservableProperty]
         private ClaseEstudianteDto claseEstudianteDto = new();
+
         [ObservableProperty]
         private ObservableCollection<ClaseEstudianteDto> listaClaseEstudiantes = new();
+
         [ObservableProperty]
         private ObservableCollection<ClaseDto> clasesDisponibles = new();
+
         [ObservableProperty]
         private ObservableCollection<EstudianteDto> estudiantesSeleccionados = new();
+
         [ObservableProperty]
         private string tituloPagina;
+
         private int IdClaseEstudiante;
+
         [ObservableProperty]
         private bool loadingClaseEstudiante = false;
 
-        [ObservableProperty]
-        private ClaseDto clase;
-
-        partial void OnClaseChanged(ClaseDto value)
-        {
-            if (ClaseEstudianteDto != null && value != null)
-            {
-                ClaseEstudianteDto.ClaseId = value.Id;
-            }
-        }
-
-        public UnirEViewModel()
-        {
-            
-        }
         public UnirEViewModel(DbbContext context)
         {
             _dbContext = context;
@@ -57,13 +46,18 @@ namespace CCVProyecto2v2.ViewsModels
                 await CargarEstudiantesPorClase();
             });
         }
+        public UnirEViewModel()
+        {
+            
+        }
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            var id= int.Parse(query["id"].ToString());
+            var id = int.Parse(query["id"].ToString());
             LoadingClaseEstudiante = true;
             IdClaseEstudiante = id;
-            if(IdClaseEstudiante==0)
+
+            if (IdClaseEstudiante == 0)
             {
                 TituloPagina = "Unir Estudiante";
             }
@@ -71,7 +65,12 @@ namespace CCVProyecto2v2.ViewsModels
             {
                 TituloPagina = "Editar";
                 LoadingClaseEstudiante = false;
-                var encontrado = await _dbContext.ClaseEstudiantes.Include(c=> c.Clase).Include(c=>c.Estudiante).FirstOrDefaultAsync(c=>c.Id==id);
+
+                var encontrado = await _dbContext.ClaseEstudiantes
+                    .Include(c => c.Clase)
+                    .Include(c => c.Estudiante)
+                    .FirstOrDefaultAsync(c => c.Id == id);
+
                 if (encontrado != null)
                 {
                     ClaseEstudianteDto = new ClaseEstudianteDto
@@ -94,8 +93,10 @@ namespace CCVProyecto2v2.ViewsModels
                 }
                 LoadingClaseEstudiante = false;
             }
+
             MainThread.BeginInvokeOnMainThread(() => { LoadingClaseEstudiante = false; });
         }
+
         [RelayCommand]
         public async Task Guardar()
         {
@@ -151,44 +152,31 @@ namespace CCVProyecto2v2.ViewsModels
                 LoadingClaseEstudiante = false;
             }
         }
-        [ObservableProperty]
-        private ObservableCollection<EstudianteDto> estudiantesDisponibles = new();
 
-        public async Task CargarDatos()
-        {
-            var estudiantes = await _dbContext.Estudiante.ToListAsync();
-            EstudiantesDisponibles = new ObservableCollection<EstudianteDto>(
-                estudiantes.Select(p => new EstudianteDto
-                {
-                    Id = p.Id,
-                    Nombre = p.Nombre,
-                    Grado = p.Grado
-                }));
-        }
         [RelayCommand]
-public async Task GuardarMultiple()
-{
-    if (ClaseEstudianteDto.ClaseId == null || ClaseEstudianteDto.ClaseId == 0)
-    {
-        await Shell.Current.DisplayAlert("Error", "Selecciona una clase válida.", "OK");
-        return;
-    }
-
-    foreach (var estudiante in EstudiantesDisponibles.Where(c => c.IsSelected))
-    {
-        var nuevaClaseEstudiante = new ClaseEstudiante
+        public async Task GuardarMultiple()
         {
-            EstudianteId = estudiante.Id,
-            ClaseId = ClaseEstudianteDto.ClaseId
-        };
+            if (ClaseEstudianteDto.ClaseId == null || ClaseEstudianteDto.ClaseId == 0)
+            {
+                await Shell.Current.DisplayAlert("Error", "Selecciona una clase válida.", "OK");
+                return;
+            }
 
-        _dbContext.ClaseEstudiantes.Add(nuevaClaseEstudiante);
-    }
+            foreach (var estudiante in EstudiantesSeleccionados.Where(c => c.IsSelected))
+            {
+                var nuevaClaseEstudiante = new ClaseEstudiante
+                {
+                    EstudianteId = estudiante.Id,
+                    ClaseId = ClaseEstudianteDto.ClaseId
+                };
 
-    await _dbContext.SaveChangesAsync();
-    await CargarEstudiantesPorClase();
-    await Shell.Current.DisplayAlert("Éxito", "Los estudiantes se han vinculado correctamente con la clase.", "OK");
-}
+                _dbContext.ClaseEstudiantes.Add(nuevaClaseEstudiante);
+            }
+
+            await _dbContext.SaveChangesAsync();
+            await CargarEstudiantesPorClase();
+            await Shell.Current.DisplayAlert("Éxito", "Los estudiantes se han vinculado correctamente con la clase.", "OK");
+        }
 
         public async Task CargarClases()
         {
@@ -206,6 +194,7 @@ public async Task GuardarMultiple()
                     }
                 }));
         }
+
         public async Task CargarEstudiantesPorClase()
         {
             var claseEstudiantes = await _dbContext.ClaseEstudiantes
@@ -235,5 +224,19 @@ public async Task GuardarMultiple()
                 }));
         }
 
+        public async Task CargarDatos()
+        {
+            var estudiantes = await _dbContext.Estudiante.ToListAsync();
+            EstudiantesSeleccionados.Clear();
+            foreach (var estudiante in estudiantes)
+            {
+                EstudiantesSeleccionados.Add(new EstudianteDto
+                {
+                    Id = estudiante.Id,
+                    Nombre = estudiante.Nombre,
+                    IsSelected = false
+                });
+            }
+        }
     }
 }

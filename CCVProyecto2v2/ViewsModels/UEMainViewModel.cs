@@ -18,13 +18,17 @@ namespace CCVProyecto2v2.ViewsModels
 
         [ObservableProperty]
         private ObservableCollection<ClaseEstudianteDto> listaClaseEstudiantes = new();
+        [ObservableProperty]
+        private ObservableCollection<ClaseDto> listaClases = new();
 
         public UEMainViewModel(DbbContext context)
         {
             _dbContext = context;
-
-            MainThread.BeginInvokeOnMainThread(async () => await ObtenerClases());
-
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await ObtenerClases();
+                await ObtenerClasesParaPicker();
+            });
             WeakReferenceMessenger.Default.Register<Mensajeria>(this, (r, m) =>
             {
                 ClaseMensajeRecibido(m.Value);
@@ -38,28 +42,27 @@ namespace CCVProyecto2v2.ViewsModels
                 .ThenInclude(c => c.Profesor)
                 .ToListAsync();
 
-            ListaClaseEstudiantes.Clear();
 
-            var clasesAgrupadas = lista.GroupBy(c => c.Clase.Id) .Select(grupo => new ClaseEstudianteDto
+            var clasesAgrupadas = lista.GroupBy(c => c.Clase.Id) .Select(c => new ClaseEstudianteDto
            {
-               ClaseId = grupo.Key,
+               ClaseId = c.Key,
                Clase = new ClaseDto
                {
-                   Id = grupo.First().Clase.Id,
-                   Nombre = grupo.First().Clase.Nombre,
+                   Id = c.First().Clase.Id,
+                   Nombre = c.First().Clase.Nombre,
                    Profesor = new ProfesorDto
                    {
-                       Id = grupo.First().Clase.Profesor.Id,
-                       Nombre = grupo.First().Clase.Profesor.Nombre
+                       Id = c.First().Clase.Profesor.Id,
+                       Nombre = c.First().Clase.Profesor.Nombre
                    }
                },
-               Estudiantes = grupo.Select(g => new EstudianteDto
+               Estudiantes = c.Select(c => new EstudianteDto
                {
-                   Id = g.Estudiante.Id,
-                   Nombre = g.Estudiante.Nombre,
-                   Cedula = g.Estudiante.Cedula,
-                   Edad = g.Estudiante.Edad,
-                   Grado = g.Estudiante.Grado
+                   Id = c.Estudiante.Id,
+                   Nombre = c.Estudiante.Nombre,
+                   Cedula = c.Estudiante.Cedula,
+                   Edad = c.Estudiante.Edad,
+                   Grado = c.Estudiante.Grado
                }).ToList()
            })
            .ToList();
@@ -70,6 +73,25 @@ namespace CCVProyecto2v2.ViewsModels
                 {
                     ListaClaseEstudiantes.Add(clase);
                 }
+        }
+        public async Task ObtenerClasesParaPicker()
+        {
+            var clases = await _dbContext.Clase.ToListAsync();
+
+            ListaClases = new ObservableCollection<ClaseDto>(
+                clases.Select(c => new ClaseDto
+                {
+                    Id = c.Id,
+                    Nombre = c.Nombre,
+                    Profesor = c.Profesor != null ? new ProfesorDto
+                    {
+                        Id = c.Profesor.Id,
+                        Nombre = c.Nombre,
+                    } : null
+                }));
+       
+
+
         }
         private void ClaseMensajeRecibido(Cuerpo claseCuerpo)
         {
@@ -136,9 +158,11 @@ namespace CCVProyecto2v2.ViewsModels
 
                 claseEstudianteDto.Id = nuevaClaseEstudiante.Id;
                 var mensaje = new Cuerpo { EsCrear = true, ClaseEstudianteDto = claseEstudianteDto };
-                WeakReferenceMessenger.Default.Send(new Mensajeria(mensaje));
-            }
+                WeakReferenceMessenger.Default.Send(new Mensajeria(new Cuerpo { EsCrear = true }));
 
+            }
+            await ObtenerClases();
+            await ObtenerClasesParaPicker();
             await Shell.Current.GoToAsync(".."); 
         }
     }

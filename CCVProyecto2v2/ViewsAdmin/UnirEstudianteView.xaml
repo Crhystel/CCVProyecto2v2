@@ -20,12 +20,13 @@
                 ItemsSource="{Binding ClasesDisponibles}" 
                 SelectedItem="{Binding Clase}" 
                 ItemDisplayBinding="{Binding Nombre}" 
+                SelectedIndexChanged="OnClaseSelected"
                 BackgroundColor="Black" 
                 Margin="0,0,0,10" />
 
             <Label Text="Selecciona estudiantes" FontAttributes="Bold" />
             <CollectionView 
-                ItemsSource="{Binding EstudiantesDisponibles}">
+                ItemsSource="{Binding EstudiantesSeleccionados}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid Padding="10">
