@@ -19,6 +19,7 @@ namespace CCVProyecto2v2.ViewsModels
         private readonly DbbContext _dbContext;
 
         public List<MateriaEnum> MateriasDisponibles { get; } = Enum.GetValues(typeof(MateriaEnum)).Cast<MateriaEnum>().ToList();
+        public List<RolEnum> RolesDisponibles { get; } = Enum.GetValues(typeof(RolEnum)).Cast<RolEnum>().ToList();
 
         [ObservableProperty]
         private ProfesorDto profesorDto = new();
@@ -66,6 +67,7 @@ namespace CCVProyecto2v2.ViewsModels
                         Nombre = encontrado.Nombre,
                         NombreUsuario = encontrado.NombreUsuario,
                         Materia = encontrado.Materia,
+                        Rol= encontrado.Rol,
                     };
                 }
 
@@ -92,6 +94,7 @@ namespace CCVProyecto2v2.ViewsModels
                         Edad = ProfesorDto.Edad,
                         Cedula = ProfesorDto.Cedula,
                         Materia = ProfesorDto.Materia,
+                        Rol= ProfesorDto.Rol,
                     };
 
                     _dbContext.Profesor.Add(tbProfesor);
@@ -118,6 +121,7 @@ namespace CCVProyecto2v2.ViewsModels
                         encontrado.Edad = ProfesorDto.Edad;
                         encontrado.Cedula = ProfesorDto.Cedula;
                         encontrado.Materia = ProfesorDto.Materia;
+                        encontrado.Rol = ProfesorDto.Rol;
 
                         await _dbContext.SaveChangesAsync();
 

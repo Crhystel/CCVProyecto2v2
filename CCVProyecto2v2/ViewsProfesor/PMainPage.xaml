@@ -103,6 +103,16 @@
                                  Grid.Column="1" 
                                  HorizontalOptions="End" 
                                  Text="{Binding Materia}" />
+                                    <Label
+                                        Grid.Row="7"
+                                        Grid.Column="0"
+                                        Text="Rol"
+                                        FontAttributes="Bold"/>
+                                    <Label
+                                        Grid.Row="7"
+                                        Grid.Column="1"
+                                        HorizontalOptions="End"
+                                        Text="{Binding Rol}"/>
 
                                     <Label 
                                  Grid.Row="6" 

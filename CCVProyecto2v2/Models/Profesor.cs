@@ -11,6 +11,7 @@ namespace CCVProyecto2v2.Models
     {
         [Required(ErrorMessage = "Este campo es obligatorio.")]
         public MateriaEnum? Materia { get; set; }
+        public RolEnum Rol { get; set; }
         public ICollection<Clase> Clases { get; set; }
     }
 }

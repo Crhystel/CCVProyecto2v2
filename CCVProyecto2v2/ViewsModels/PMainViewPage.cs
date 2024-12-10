@@ -46,6 +46,7 @@ namespace CCVProyecto2v2.ViewsModels
                         Cedula = item.Cedula,
                         Edad = item.Edad,
                         Materia = item.Materia,
+                        Rol=item.Rol,
                     });
                 }
             }
@@ -67,6 +68,7 @@ namespace CCVProyecto2v2.ViewsModels
                 encontrado.Cedula = profesorDto.Cedula;
                 encontrado.Edad = profesorDto.Edad;
                 encontrado.Materia = profesorDto.Materia;
+                encontrado.Rol = profesorDto.Rol;
             }
         }
         [RelayCommand]
