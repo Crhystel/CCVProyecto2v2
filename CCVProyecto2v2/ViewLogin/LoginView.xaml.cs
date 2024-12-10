@@ -1,5 +1,7 @@
+using CCVProyecto2v2.DataAccess;
 using CCVProyecto2v2.Models;
 using CCVProyecto2v2.ViewsGeneral;
+using Microsoft.EntityFrameworkCore;
 
 namespace CCVProyecto2v2.ViewLogin;
 
@@ -38,6 +40,9 @@ public partial class LoginView : ContentPage
                     case RolEnum.Estudiante:
                         await Navigation.PushAsync(new EstudianteView());
                         break;
+                    default:
+                        await DisplayAlert("Error", "Rol desconocido", "OK");
+                        break;
                 }
             }
             else
@@ -47,17 +52,14 @@ public partial class LoginView : ContentPage
         }
     }
 
-
     private async Task<Usuario> AutenticarUsuarioAsync(string nombreUsuario, string contrasenia)
     {
-
-        List<Usuario> usuarios = new List<Usuario>
-    {
-        new Administrador { NombreUsuario = "admin", Contrasenia = "admin", Rol = RolEnum.Administrador },
-        new Profesor { NombreUsuario = "profesor1", Contrasenia = "1234", Rol = RolEnum.Profesor },
-        new Estudiante { NombreUsuario = "estudiante1", Contrasenia = "1234", Rol = RolEnum.Estudiante }
-    };
-
-        return usuarios.FirstOrDefault(u => u.NombreUsuario == nombreUsuario && u.Contrasenia == contrasenia);
+        using (var context = new DbbContext())
+        {
+            return await context.Usuarios
+                .FirstOrDefaultAsync(u => u.NombreUsuario == nombreUsuario && u.Contrasenia == contrasenia);
+        }
     }
+
+
 }

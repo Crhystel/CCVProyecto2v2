@@ -83,6 +83,7 @@ namespace CCVProyecto2v2.ViewsModels
                             Id = encontrado.Estudiante.Id,
                             Nombre = encontrado.Estudiante.Nombre,
                             Grado = encontrado.Estudiante.Grado
+                           
                         },
                         Clase = new ClaseDto
                         {

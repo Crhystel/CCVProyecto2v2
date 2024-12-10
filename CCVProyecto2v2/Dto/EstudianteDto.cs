@@ -26,6 +26,7 @@ namespace CCVProyecto2v2.Dto
         public int edad;
         [ObservableProperty]
         private GradoEnum grado;
+
         public bool IsSelected { get; set; }
         [ObservableProperty]
         public ObservableCollection<ClaseEstudianteDto> clasesEstudiantes = new();
